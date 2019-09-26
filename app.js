@@ -2,5 +2,15 @@ const http = require('http')
 const express = require('express')
 
 const app = express()
-const server = http.createServer(requestLister)
+
+app.use((req, res, next) => {
+  console.log('In middleware')
+  next()
+})
+
+app.use((req, res, next) => {
+  console.log('In other one')
+})
+
+const server = http.createServer(app)
 server.listen(4000)
