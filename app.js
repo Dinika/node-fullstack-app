@@ -3,6 +3,8 @@ const express = require('express')
 
 const app = express()
 
+app.get('/favicon.ico', (req, res) => res.status(204));
+
 app.use('/about', (req, res, next) => {
   console.log('Middleware 1')
   res.send('<h1>Hi I am Dinika</h1>')
