@@ -13,5 +13,4 @@ app.use((req, res, next) => {
   res.send('<h1>Corals!</h1>')
 })
 
-const server = http.createServer(app)
-server.listen(4000)
+app.listen(4000)
