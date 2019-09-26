@@ -1,5 +1,6 @@
 const http = require('http')
-const requestLister = require('./routes')
+const express = require('express')
 
+const app = express()
 const server = http.createServer(requestLister)
 server.listen(4000)
