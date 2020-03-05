@@ -1,20 +1,22 @@
-const http = require('http')
 const express = require('express')
-
+const bodyParser = require('body-parser')
 const app = express()
+
+app.use(bodyParser.urlencoded({ extended: false }))
 
 app.get('/favicon.ico', (req, res) => res.status(204));
 
-app.use('/about', (req, res, next) => {
-  res.send('<h1>Hi I am Dinika</h1>')
+app.use('/add-order', (req, res, next) => {
+  res.send('<form action="/order" method="POST"><input type="text" name="product"/> <button>Order</button> </form>')
 })
 
-app.use('/work', (req, res, next) => {
-  res.send('<h1>I work at Minna</h1>')
+app.use('/order', (req, res, next) => {
+  console.log(req.body)
+  res.redirect('/')
 })
 
 app.use('/', (req, res, next) => {
-  res.send('<h1>Corals!</h1>')
+  res.send('<h1>Welcome to the Cafe</h1>')
 })
 
 app.listen(4000)
