@@ -10,7 +10,7 @@ app.use('/add-order', (req, res, next) => {
   res.send('<form action="/order" method="POST"><input type="text" name="product"/> <button>Order</button> </form>')
 })
 
-app.use('/order', (req, res, next) => {
+app.post('/order', (req, res, next) => {
   console.log(req.body)
   res.redirect('/')
 })
