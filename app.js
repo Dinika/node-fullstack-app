@@ -6,17 +6,14 @@ const app = express()
 app.get('/favicon.ico', (req, res) => res.status(204));
 
 app.use('/about', (req, res, next) => {
-  console.log('Middleware 1')
   res.send('<h1>Hi I am Dinika</h1>')
 })
 
 app.use('/work', (req, res, next) => {
-  console.log('For now')
   res.send('<h1>I work at Minna</h1>')
 })
 
 app.use('/', (req, res, next) => {
-  console.log('In other one')
   res.send('<h1>Corals!</h1>')
 })
 
