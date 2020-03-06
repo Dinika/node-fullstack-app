@@ -5,22 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Order</title>
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/order.css" />
   </head>
 
   <body>
-    <header>
-      <nav>
-        <ul>
-          <li><a href="/">Cafe</a></li>
-          <li><a href="/order">Order</a></li>
+    <header class="main-header">
+      <nav class="main-header__nav">
+        <ul class="main-header__item-list">
+          <li class="main-header__item"><a href="/">Shop</a></li>
+          <li class="main-header__item">
+            <a class="active" href="/order">Add Product</a>
+          </li>
         </ul>
       </nav>
     </header>
 
     <main>
-      <form action="/order" method="POST">
-        <input type="text" name="title" />
-        <button type="submit">Add Product</button>
+      <form class="product-form" action="/order" method="POST">
+        <div class="form-control">
+          <label for="title">Product</label>
+          <input type="text" name="title" id="title" />
+        </div>
+
+        <button type="submit">Buy</button>
       </form>
     </main>
   </body>
