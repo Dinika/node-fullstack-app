@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const adminRoutes = require('./routes/order')
 const cafeRoutes = require('./routes/cafe')
+const path = require('path')
 
 const app = express()
 
@@ -10,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(adminRoutes)
 app.use(cafeRoutes)
 app.use('/', function (req, res, next) {
-  res.send('<h1>Page not found</h1>')
+  res.sendFile(path.join(__dirname, 'views', '404.html'))
 })
 
 app.listen(4000)
