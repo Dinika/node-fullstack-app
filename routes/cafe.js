@@ -10,7 +10,7 @@ router.get('/favicon.ico', (req, res) => res.status(204))
 
 router.get('/', (req, res, next) => {
   console.log('cafe.js', order.orders)
-  res.sendFile(path.join(rootDir, 'views', 'cafe.html'))
+  res.render('cafe')
 })
 
 module.exports = router
