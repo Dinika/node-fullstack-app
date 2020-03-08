@@ -6,7 +6,7 @@ html(lang="en")
     meta(http-equiv="X-UA-Compatible", content="ie=edge")
     title Cafe
     link(rel="stylesheet", href="/css/main.css")
-    link(rel="stylesheet", href="/css/order.css")
+    link(rel="stylesheet", href="/css/admin.css")
   body
     header.main-header
       nav.main-header__nav
@@ -14,14 +14,14 @@ html(lang="en")
           li.main-header__item
             a.active(href="/") Cafe
           li.main-header__item
-            a(href='/order') Order
+            a(href='/admin') Admin
     main
-      if orders.length > 0
+      if products.length > 0
         .grid
-          each order in orders
+          each product in products
             article.card.product-item
               header.card__header
-                h1.product__title #{order.name}
+                h1.product__title #{product.name}
               .card__image
                 img(src="/images/cafe.jpeg", alt="presentation")
               .card__content

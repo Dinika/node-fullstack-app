@@ -1,5 +1,5 @@
 const express = require('express')
-const order = require('./order')
+const admin = require('./admin')
 
 const router = express.Router()
 
@@ -7,8 +7,7 @@ const router = express.Router()
 router.get('/favicon.ico', (req, res) => res.status(204))
 
 router.get('/', (req, res, next) => {
-  console.log(order.orders)
-  res.render('cafe', { orders: order.orders })
+  res.render('cafe', { products: admin.products })
 })
 
 module.exports = router
