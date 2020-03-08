@@ -15,3 +15,19 @@ html(lang="en")
             a.active(href="/") Cafe
           li.main-header__item
             a(href='/order') Order
+    main
+      if orders.length > 0
+        .grid
+          each order in orders
+            article.card.product-item
+              header.card__header
+                h1.product__title #{order.name}
+              .card__image
+                img(src="/images/cafe.jpeg", alt="presentation")
+              .card__content
+                h2.product__price $3.50
+                p.product__description A rich and velvety cafe au lait, made from a blend of sustainably grown and sourced coffee beans
+              .card__actions  
+                button.btn Add to cart
+      else
+        h1 Sorry, we have no products available at the moment
