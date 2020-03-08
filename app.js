@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(admin.router)
 app.use(cafeRoutes)
 app.use('/', function (req, res, next) {
-  res.render('404.pug')
+  res.status(404).render('404.pug')
 })
 
 app.listen(4000)
