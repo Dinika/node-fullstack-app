@@ -1,13 +1,13 @@
 const express = require('express')
-const productController = require('../controllers/product')
+const cafeController = require('../controllers/cafe')
 
 const router = express.Router()
 
 
 router.get('/favicon.ico', (req, res) => res.status(204))
 
-router.get('/', productController.getProducts)
-router.get('/products', productController.getProducts2)
-router.get('/cart', productController.cart)
+router.get('/', cafeController.getProducts)
+router.get('/products', cafeController.getProducts2)
+router.get('/cart', cafeController.cart)
 
 module.exports = router

@@ -10,24 +10,8 @@ exports.postAddProduct = (req, res, next) => {
   res.redirect('/')
 }
 
-exports.getProducts = (req, res, next) => {
-  Product.fetchAll((products) => {
-    res.render('cafe/product-list.pug', { products: products, path: '/', pageTitle: 'Cafe' })
-  })
-}
-
 exports.getAdminProducts = (req, res, next) => {
   Product.fetchAll((products) => {
     res.render('admin/products.pug', { products: products, path: '/admin/products', pageTitle: 'Admin' })
   })
-}
-
-exports.getProducts2 = (req, res, next) => {
-  Product.fetchAll((products) => {
-    res.render('cafe/product-list.pug', { products: products, path: '/products', pageTitle: 'Cafe' })
-  })
-}
-
-exports.cart = (req, res, next) => {
-  res.render('cafe/cart.pug', { path: '/cart', pageTitle: 'Cart' })
 }
