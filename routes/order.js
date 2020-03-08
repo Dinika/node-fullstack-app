@@ -4,13 +4,16 @@ const rootDir = require('../utilities/rootDir')
 
 const router = express.Router()
 
+const orders = [];
+
 router.get('/order', (req, res, next) => {
   res.sendFile(path.join(rootDir, 'views', 'order.html'))
 })
 
 router.post('/order', (req, res, next) => {
-  console.log(req.body)
+  orders.push({ name: req.body.title })
   res.redirect('/')
 })
 
-module.exports = router
+exports.orders = orders;
+exports.router = router;

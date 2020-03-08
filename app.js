@@ -1,16 +1,16 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const adminRoutes = require('./routes/order')
+const order = require('./routes/order')
 const cafeRoutes = require('./routes/cafe')
 const rootDir = require('./utilities/rootDir')
 const path = require('path')
 
 const app = express()
 
-app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(path.join(rootDir, 'public')))
+app.use(bodyParser.urlencoded({ extended: false }))
 
-app.use(adminRoutes)
+app.use(order.router)
 app.use(cafeRoutes)
 app.use('/', function (req, res, next) {
   res.sendFile(path.join(rootDir, 'views', '404.html'))
