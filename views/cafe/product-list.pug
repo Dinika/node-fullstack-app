@@ -1,7 +1,7 @@
 extends ../layouts/main-layout.pug
 
 block styles
-  link(rel="stylesheet", href="/css/admin.css")
+  link(rel="stylesheet" href="/css/admin.css")
 
 block content
   main
@@ -12,11 +12,12 @@ block content
             header.card__header
               h1.product__title #{product.name}
             .card__image
-              img(src="/images/cafe.jpeg", alt="presentation")
+              img(src=(product.imageUrl), alt="presentation")
             .card__content
-              h2.product__price $3.50
-              p.product__description A rich and velvety cafe au lait, made from a blend of sustainably grown and sourced coffee beans
-            .card__actions  
-              button.btn Add to cart
+              h2.product__price $#{product.price}
+              p.product__description #{product.description}
+            .card__actions
+              form(action="/add-to-cart" method="post")
+                button.btn Add to cart
     else
       h1 Sorry, we have no products available at the moment

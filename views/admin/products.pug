@@ -12,11 +12,14 @@ block content
             header.card__header
               h1.product__title #{product.name}
             .card__image
-              img(src="/images/cafe.jpeg" alt="presentation")
+              img(src=(product.imageUrl), alt="presentation")
             .card__content
-              h2.product__price $3.50
-              p.product__description A rich and velvety cafe au lait, made from a blend of sustainably grown and sourced coffee beans
+              h2.product__price $#{product.price}
+              p.product__description #{product.description}
             .card__actions  
-              button.btn Add to cart
+              a.btn(href="/admin/edit-product") Edit
+              form(action="/admin/delete-product" method="DELETE")
+                button.btn Delete
+
     else
       h1 Sorry, we have no products available at the moment
