@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(admin.router)
 app.use(cafeRoutes)
 app.use('/', function (req, res, next) {
-  res.sendFile(path.join(rootDir, 'views', '404.html'))
+  res.render('404.pug')
 })
 
 app.listen(4000)
