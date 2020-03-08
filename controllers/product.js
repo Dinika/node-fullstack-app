@@ -1,14 +1,17 @@
-const products = []
+const Product = require('../model/product')
 
 exports.getAddProduct = (req, res, next) => {
   res.render('add-product', { path: '/admin', pageTitle: 'Admin' })
 }
 
 exports.postAddProduct = (req, res, next) => {
-  products.push({ name: req.body.title })
+  const product = new Product(req.body.title)
+  product.save()
   res.redirect('/')
 }
 
 exports.getProducts = (req, res, next) => {
-  res.render('cafe', { products: products, path: '/', pageTitle: 'Cafe' })
+  Product.fetchAll((products) => {
+    res.render('cafe', { products: products, path: '/', pageTitle: 'Cafe' })
+  })
 }

@@ -4,6 +4,7 @@ const admin = require('./routes/admin')
 const cafeRoutes = require('./routes/cafe')
 const rootDir = require('./utilities/rootDir')
 const path = require('path')
+const page404Controller = require('./controllers/error')
 
 const app = express()
 app.set('view engine', 'pug')
@@ -14,8 +15,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(admin.router)
 app.use(cafeRoutes)
-app.use('/', function (req, res, next) {
-  res.status(404).render('404.pug', { pageTitle: 'Cafe' })
-})
+app.use('/', page404Controller.get404)
 
 app.listen(4000)
