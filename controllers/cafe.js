@@ -15,3 +15,7 @@ exports.getProducts2 = (req, res, next) => {
 exports.cart = (req, res, next) => {
   res.render('cafe/cart.pug', { path: '/cart', pageTitle: 'Cart' })
 }
+
+exports.orders = (req, res, next) => {
+  res.render('cafe/orders.pug', { path: '/orders', pageTitle: 'Orders' })
+}
