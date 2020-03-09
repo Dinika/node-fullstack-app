@@ -10,5 +10,5 @@ router.get('/', cafeController.getProducts)
 router.get('/products', cafeController.getProducts2)
 router.get('/cart', cafeController.cart)
 router.get('/orders', cafeController.orders)
-
+router.get('/product/:productId', cafeController.getProduct)
 module.exports = router
