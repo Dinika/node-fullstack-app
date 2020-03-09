@@ -10,8 +10,8 @@ exports.getProduct = (req, res, next) => {
   const productId = req.params.productId
   Product.findProductById(productId, product => {
     console.log(product)
+    res.render('cafe/product-detail.pug', {product: product, path: '/products'})
   })
-  res.redirect('/')
 }
 
 exports.getProducts2 = (req, res, next) => {
