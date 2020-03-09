@@ -1,8 +1,9 @@
 const fs = require('fs');
 const path = require('path');
+const rootDir = require('../utilities/rootDir')
 
 const p = path.join(
-  path.dirname(process.mainModule.filename),
+  rootDir,
   'data',
   'products.json'
 );
