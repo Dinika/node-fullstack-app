@@ -2,17 +2,13 @@
   width: 20rem;
   max-width: 90%;
   margin: auto;
-}
-
-.product-form {
-  width: 20rem;
-  max-width: 90%;
-  margin: auto;
+  display: block;
 }
 
 .product-item {
   width: 20rem;
   max-width: 95%;
+  margin: 1rem;
 }
 
 .product__title {
@@ -29,6 +25,7 @@
 .product__description {
   text-align: center;
 }
+
 .form-control {
   margin: 1rem 0;
 }
