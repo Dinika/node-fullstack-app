@@ -9,8 +9,7 @@ exports.getProducts = (req, res, next) => {
 exports.getProduct = (req, res, next) => {
   const productId = req.params.productId
   Product.findProductById(productId, product => {
-    console.log(product)
-    res.render('cafe/product-detail.pug', {product: product, path: '/products'})
+    res.render('cafe/product-detail.pug', { product: product, path: '/products' })
   })
 }
 
@@ -20,7 +19,13 @@ exports.getProducts2 = (req, res, next) => {
   })
 }
 
-exports.cart = (req, res, next) => {
+exports.getCart = (req, res, next) => {
+  res.render('cafe/cart.pug', { path: '/cart', pageTitle: 'Cart' })
+}
+
+exports.postCart = (req, res, next) => {
+  const productId = req.body.productId
+  console.log(productId)
   res.render('cafe/cart.pug', { path: '/cart', pageTitle: 'Cart' })
 }
 

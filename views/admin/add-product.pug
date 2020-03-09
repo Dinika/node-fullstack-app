@@ -5,18 +5,18 @@ block styles
 
 block content
   main
-    form.product-form(action="/product" method="POST")
-      .form-control
-        label(for="name") Product
-        input(type="text" name="name" id="name")
-      .form-control
-        label(for="price") Price
-        input(type="number" name="price" id="price" step="0.01")
-      .form-control
-        label(for="imageUrl") Image URL
-        input(type="text" name="imageUrl" id="imageUrl")
-      .form-control
-        label(for="description") Description
-        textarea(name="description" cols="35" rows="5" id="description")
-
-      button(type="submit") Add
+    if products.length > 0
+      .grid
+        each product in products
+          article.card.product-item
+            header.card__header
+              h1.product__title #{product.name}
+            .card__image
+              img(src=(product.imageUrl), alt="presentation")
+            .card__content
+              h2.product__price $#{product.price}
+              p.product__description #{product.description}
+            .card__actions  
+              button.btn Add to cart
+    else
+      h1 Sorry, we have no products available at the moment
