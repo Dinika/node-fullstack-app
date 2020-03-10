@@ -17,7 +17,7 @@ exports.getEditProduct = (req, res, next) => {
 exports.postAddProduct = (req, res, next) => {
   const { name, price, imageUrl, description } = req.body
   const product = new Product(name, price, imageUrl, description)
-  product.save()
+  product.upsert()
   res.redirect('/')
 }
 
@@ -31,8 +31,9 @@ exports.postEditProduct = (req, res, next) => {
     // Else update the product
     // Destructuring would not work if the 'name' attribute of the html element is not the same as 
     // the corresponding key name in the product model
-    const incomingUpdatedProduct = { id: productId, ...req.body }
-    Product.update(productId, incomingUpdatedProduct)
+    const { name, price, imageUrl, description } = req.body
+    const incomingUpdatedProduct = new Product(name, price, imageUrl, description, productId)
+    incomingUpdatedProduct.upsert()
     res.redirect('/admin/products')
   })
 }

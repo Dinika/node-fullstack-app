@@ -19,21 +19,31 @@ const getProductsFromFile = cb => {
 };
 
 module.exports = class Product {
-  constructor(name, price, imageUrl, description) {
+  constructor(name, price, imageUrl, description, id) {
+    this.id = id || Math.random().toString();
     this.name = name;
     this.price = price;
     this.imageUrl = imageUrl;
     this.description = description;
   }
 
-  save() {
-    this.id = Math.random().toString()
+  /*
+  * Updates existing product or inserts new product if none exists
+  */
+  upsert() {
     getProductsFromFile(products => {
-      products.push(this);
+      const productIndexToUpdate = products.findIndex(p => p.id === this.id)
+      if (productIndexToUpdate >= 0) {
+        // Product already exists. Update it
+        products[productIndexToUpdate] = this
+      } else {
+        // Product does not exist. Insert it
+        products.push(this)
+      }
       fs.writeFile(p, JSON.stringify(products), err => {
-        console.log(err);
-      });
-    });
+        console.log(err)
+      })
+    })
   }
 
   static delete(id) {
@@ -42,18 +52,6 @@ module.exports = class Product {
       fs.writeFile(p, JSON.stringify(updatedProducts), err => {
         if (err) console.log(err)
       })
-    })
-  }
-
-  static update(id, incomingProduct) {
-    getProductsFromFile(products => {
-      const productIndexToUpdate = products.findIndex(p => p.id === String(id))
-      if (productIndexToUpdate >= 0) {
-        products[productIndexToUpdate] = incomingProduct
-        fs.writeFile(p, JSON.stringify(products), err => {
-          if (err) console.log(err)
-        })
-      }
     })
   }
 
