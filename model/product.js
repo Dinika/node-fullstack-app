@@ -36,6 +36,18 @@ module.exports = class Product {
     });
   }
 
+  static update(id, incomingProduct) {
+    getProductsFromFile(products => {
+      const productIndexToUpdate = products.findIndex(p => p.id === String(id))
+      if (productIndexToUpdate >= 0) {
+        products[productIndexToUpdate] = incomingProduct
+        fs.writeFile(p, JSON.stringify(products), err => {
+          if (err) console.log(err)
+        })
+      }
+    })
+  }
+
   static fetchAll(cb) {
     getProductsFromFile(cb);
   }
