@@ -21,7 +21,16 @@ exports.getProducts2 = (req, res, next) => {
 }
 
 exports.getCart = (req, res, next) => {
-  res.render('cafe/cart.pug', { path: '/cart', pageTitle: 'Cart' })
+  Cart.fetchCart(cart => {
+    Product.fetchAll(products => {
+      const productsInCart = cart.products.map(p => {
+        const product = products.find(prod => prod.id === p.id)
+        const extendedProduct = { ...product, quantity: p.quantity }
+        return extendedProduct
+      })
+      res.render('cafe/cart.pug', { path: '/cart', pageTitle: 'Cart', productsInCart: productsInCart, totalPrice: cart.totalPrice })
+    })
+  })
 }
 
 exports.postCart = (req, res, next) => {
@@ -29,7 +38,7 @@ exports.postCart = (req, res, next) => {
   Product.findProductById(productId, product => {
     Cart.addProduct(productId, product.price)
   })
-  res.render('cafe/cart.pug', { path: '/cart', pageTitle: 'Cart' })
+  res.status(204)
 }
 
 exports.orders = (req, res, next) => {

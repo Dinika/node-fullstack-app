@@ -1,6 +1,7 @@
 const path = require('path')
 const fs = require('fs')
 const rootDir = require('../utilities/rootDir')
+const Product = require('./product')
 
 const pathToFile = path.join(rootDir, 'data', 'cart.json')
 
@@ -38,15 +39,24 @@ module.exports = class Cart {
       } else {
         const cart = { ...(JSON.parse(fileContent)) }
         const { products, totalPrice } = cart
-        console.log("Original", cart)
         const updatedProducts = products.filter(p => p.id !== id)
         const productToDelete = products.find(p => p.id === id)
         const updatedTotalPrice = totalPrice - productPrice * productToDelete.quantity
         const updatedCart = { products: updatedProducts, totalPrice: updatedTotalPrice }
-        console.log("updated", updatedCart)
         fs.writeFile(pathToFile, JSON.stringify(updatedCart), err => {
           if (err) console.log(err)
         })
+      }
+    })
+  }
+
+  static fetchCart(cb) {
+    fs.readFile(pathToFile, (err, fileContent) => {
+      if (err) {
+        // cart is empty
+        cb([], 0)
+      } else {
+        cb(JSON.parse(fileContent))
       }
     })
   }

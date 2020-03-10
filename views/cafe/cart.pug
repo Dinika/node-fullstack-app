@@ -2,4 +2,11 @@ extends ../layouts/main-layout.pug
 
 block content
   main
-    h1 Cart
+    .totalPrice Total price - #{totalPrice}
+    if productsInCart.length > 0
+      ul
+        each product in productsInCart
+          li #{product.name} - #{product.quantity}
+    else
+      h1 The cart is empty
+      .totalPrice Total price 0
