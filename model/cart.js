@@ -41,6 +41,7 @@ module.exports = class Cart {
         const { products, totalPrice } = cart
         const updatedProducts = products.filter(p => p.id !== id)
         const productToDelete = products.find(p => p.id === id)
+        console.log("id", id)
         const updatedTotalPrice = totalPrice - productPrice * productToDelete.quantity
         const updatedCart = { products: updatedProducts, totalPrice: updatedTotalPrice }
         fs.writeFile(pathToFile, JSON.stringify(updatedCart), err => {

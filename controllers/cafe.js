@@ -44,3 +44,8 @@ exports.postCart = (req, res, next) => {
 exports.orders = (req, res, next) => {
   res.render('cafe/orders.pug', { path: '/orders', pageTitle: 'Orders' })
 }
+
+exports.deleteCartProduct = (req, res, next) => {
+  Cart.deleteProduct(req.body.productId, Number(req.body.price))
+  res.redirect('/')
+}

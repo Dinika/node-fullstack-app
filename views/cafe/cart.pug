@@ -2,11 +2,16 @@ extends ../layouts/main-layout.pug
 
 block content
   main
-    .totalPrice Total price - #{totalPrice}
+    div Total price - #{totalPrice}
     if productsInCart.length > 0
       ul
         each product in productsInCart
-          li #{product.name} - #{product.quantity}
+          li 
+            p #{product.name} - #{product.quantity}
+            form(action="/delete-cart-product" method="POST")
+              input(type="text" name="productId" value=(product.id) hidden)
+              input(type="number" hidden name="price" value=(product.price))
+              button.btn Delete
     else
       h1 The cart is empty
-      .totalPrice Total price 0
+      div Total price 0
