@@ -33,8 +33,14 @@ exports.postEditProduct = (req, res, next) => {
     // the corresponding key name in the product model
     const { name, price, imageUrl, description } = req.body
     const incomingUpdatedProduct = new Product(name, price, imageUrl, description, productId)
-    incomingUpdatedProduct.upsert()
-    res.redirect('/admin/products')
+    incomingUpdatedProduct
+      .upsert()
+      .then(() => {
+        res.redirect('/admin/products')
+      })
+      .catch(err => {
+        console.log(err)
+      })
   })
 }
 

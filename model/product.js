@@ -33,19 +33,8 @@ module.exports = class Product {
   * Updates existing product or inserts new product if none exists
   */
   upsert() {
-    getProductsFromFile(products => {
-      const productIndexToUpdate = products.findIndex(p => p.id === this.id)
-      if (productIndexToUpdate >= 0) {
-        // Product already exists. Update it
-        products[productIndexToUpdate] = this
-      } else {
-        // Product does not exist. Insert it
-        products.push(this)
-      }
-      fs.writeFile(p, JSON.stringify(products), err => {
-        console.log(err)
-      })
-    })
+    db.execute('INSERT into products (name, price, description, imageUrl) VALUES (?, ?, ?, ?)',
+      [this.name, this.price, this.description, this.imageUrl])
   }
 
   static delete(id) {
