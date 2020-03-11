@@ -13,11 +13,15 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
   const productId = req.params.productId
-  Product.findProductById(productId, product => {
-    res.render('cafe/product-detail.pug', { product: product, path: '/products' })
-  })
+  Product
+    .findProductById(productId)
+    .then(([product]) => {
+      res.render('cafe/product-detail.pug', { product: product[0], path: '/products' })
+    })
+    .catch(err => {
+      console.log(err)
+    })
 }
-
 exports.getCart = (req, res, next) => {
   Cart.fetchCart(cart => {
     Product.fetchAll(products => {
