@@ -1,4 +1,4 @@
-## Online cafe store :sparkles:
+## Online cafe store :coffee:
 
 A node application that implements an online cafe where users can view and shop available products and administrators of the shop can manage the products available in the cafe.
 
