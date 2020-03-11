@@ -7,7 +7,7 @@ const router = express.Router()
 router.get('/favicon.ico', (req, res) => res.status(204))
 
 router.get('/', cafeController.getProducts)
-router.get('/products', cafeController.getProducts2)
+router.get('/products', cafeController.getProducts)
 router.get('/cart', cafeController.getCart)
 router.post('/cart', cafeController.postCart)
 router.post('/delete-cart-product', cafeController.deleteCartProduct)

@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const rootDir = require('../utilities/rootDir')
 const Cart = require('./cart')
+const db = require('../utilities/database')
 
 const p = path.join(
   rootDir,
@@ -68,8 +69,8 @@ module.exports = class Product {
     })
   }
 
-  static fetchAll(cb) {
-    getProductsFromFile(cb);
+  static fetchAll() {
+    return db.execute('SELECT * FROM products')
   }
 
   static findProductById(id, cb) {

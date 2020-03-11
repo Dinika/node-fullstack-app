@@ -2,21 +2,19 @@ const Product = require('../model/product')
 const Cart = require('../model/cart')
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll((products) => {
-    res.render('cafe/product-list.pug', { products: products, path: '/', pageTitle: 'Cafe' })
-  })
+  Product.fetchAll()
+    .then(([products, metadata]) => {
+      res.render('cafe/product-list.pug', { products: products, path: '/', pageTitle: 'Cafe' })
+    })
+    .catch(err => {
+      console.log(err)
+    })
 }
 
 exports.getProduct = (req, res, next) => {
   const productId = req.params.productId
   Product.findProductById(productId, product => {
     res.render('cafe/product-detail.pug', { product: product, path: '/products' })
-  })
-}
-
-exports.getProducts2 = (req, res, next) => {
-  Product.fetchAll((products) => {
-    res.render('cafe/product-list.pug', { products: products, path: '/products', pageTitle: 'Cafe' })
   })
 }
 
