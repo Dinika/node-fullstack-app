@@ -33,8 +33,10 @@ module.exports = class Product {
   * Updates existing product or inserts new product if none exists
   */
   upsert() {
-    db.execute('INSERT into products (name, price, description, imageUrl) VALUES (?, ?, ?, ?)',
-      [this.name, this.price, this.description, this.imageUrl])
+    return db.execute(
+      'INSERT INTO products (name, price, imageUrl, description) VALUES (?, ?, ?, ?)',
+      [this.name, this.price, this.imageUrl, this.description]
+    )
   }
 
   static delete(id) {

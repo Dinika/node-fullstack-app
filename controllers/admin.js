@@ -17,8 +17,12 @@ exports.getEditProduct = (req, res, next) => {
 exports.postAddProduct = (req, res, next) => {
   const { name, price, imageUrl, description } = req.body
   const product = new Product(name, price, imageUrl, description)
-  product.upsert()
-  res.redirect('/')
+  product
+    .upsert()
+    .then(() => {
+      res.redirect('/admin/products')
+    })
+    .catch(err => console.log(err))
 }
 
 exports.postEditProduct = (req, res, next) => {
@@ -38,9 +42,7 @@ exports.postEditProduct = (req, res, next) => {
       .then(() => {
         res.redirect('/admin/products')
       })
-      .catch(err => {
-        console.log(err)
-      })
+      .catch(err => console.log(err))
   })
 }
 
@@ -51,7 +53,12 @@ exports.deleteProduct = (req, res, next) => {
 }
 
 exports.getAdminProducts = (req, res, next) => {
-  Product.fetchAll((products) => {
-    res.render('admin/products.pug', { products: products, path: '/admin/products', pageTitle: 'Admin' })
-  })
+  Product
+    .fetchAll()
+    .then(([products]) => {
+      res.render('admin/products.pug', { products: products, path: '/admin/products', pageTitle: 'Admin' })
+    })
+    .catch(err => {
+      console.log(err)
+    })
 }
