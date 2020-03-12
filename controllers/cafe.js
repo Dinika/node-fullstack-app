@@ -2,8 +2,9 @@ const Product = require('../model/product')
 const Cart = require('../model/cart')
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll()
-    .then(([products, metadata]) => {
+  Product
+    .findAll()
+    .then(products => {
       res.render('cafe/product-list.pug', { products: products, path: '/', pageTitle: 'Cafe' })
     })
     .catch(err => {
