@@ -28,6 +28,7 @@ const Product = sequelize.define(
 }
 )
 
+module.exports = Product
 
 // const fs = require('fs');
 // const path = require('path');
