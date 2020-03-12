@@ -21,15 +21,14 @@ exports.getEditProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
   const { name, price, imageUrl, description } = req.body
-  const product = new Product(name, price, imageUrl, description)
   Product.create({
     name: name,
     price: price,
     imageUrl: imageUrl,
     description: description
   })
-    .then(res => {
-      console.log(res)
+    .then(result => {
+      res.redirect('/admin/products')
     })
     .catch(err => {
       console.log(err)
@@ -65,8 +64,17 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.deleteProduct = (req, res, next) => {
   const productId = req.params.productId
-  Product.delete(productId)
-  res.redirect('/admin/products')
+  Product
+    .findByPk(productId)
+    .then(product => {
+      return product.destroy()
+    })
+    .then(() => {
+      res.redirect('/admin/products')
+    })
+    .catch(err => {
+      console.log(err)
+    })
 }
 
 exports.getAdminProducts = (req, res, next) => {
