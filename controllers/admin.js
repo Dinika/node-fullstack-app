@@ -60,8 +60,8 @@ exports.deleteProduct = (req, res, next) => {
 
 exports.getAdminProducts = (req, res, next) => {
   Product
-    .fetchAll()
-    .then(([products]) => {
+    .findAll()
+    .then(products => {
       res.render('admin/products.pug', { products: products, path: '/admin/products', pageTitle: 'Admin' })
     })
     .catch(err => {
