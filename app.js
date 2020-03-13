@@ -6,6 +6,8 @@ const rootDir = require('./utilities/rootDir')
 const path = require('path')
 const page404Controller = require('./controllers/error')
 const sequelize = require('./utilities/database')
+const Product = require('./model/product')
+const User = require('./model/user')
 
 const app = express()
 
@@ -20,7 +22,10 @@ app.use(admin.router)
 app.use(cafeRoutes)
 app.use('/', page404Controller.get404)
 
-sequelize.sync()
+Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' })
+User.hasMany(Product)
+
+sequelize.sync({ force: true })
   .then(result => {
     app.listen(4000)
   })
