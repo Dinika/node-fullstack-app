@@ -25,16 +25,27 @@ exports.getProduct = (req, res, next) => {
 }
 
 exports.getCart = (req, res, next) => {
-  Cart.fetchCart(cart => {
-    Product.fetchAll(products => {
-      const productsInCart = cart.products.map(p => {
-        const product = products.find(prod => prod.id === p.id)
-        const extendedProduct = { ...product, quantity: p.quantity }
-        return extendedProduct
-      })
+  req.user
+    .getCart()
+    .then(cart => {
+      console.log(cart)
+      return cart.getProducts()
+    })
+    .then(productsInCart => {
       res.render('cafe/cart.pug', { path: '/cart', pageTitle: 'Cart', productsInCart: productsInCart, totalPrice: cart.totalPrice })
     })
-  })
+    .catch(err => {
+      console.log(err)
+    })
+  // Cart.fetchCart(cart => {
+  //   Product.fetchAll(products => {
+  //     const productsInCart = cart.products.map(p => {
+  //       const product = products.find(prod => prod.id === p.id)
+  //       const extendedProduct = { ...product, quantity: p.quantity }
+  //       return extendedProduct
+  //       })
+  //     })
+  //   })
 }
 
 exports.postCart = (req, res, next) => {
