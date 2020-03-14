@@ -6,9 +6,9 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.getEditProduct = (req, res, next) => {
   const isEditMode = req.query.edit
-  Product
-    .findByPk(req.params.productId)
-    .then(product => {
+  req.user.getProducts({ where: { id: req.params.productId } })
+    .then(products => {
+      const product = products[0]
       if (!product) {
         return res.status(404).redirect('/404')
       }
@@ -37,9 +37,10 @@ exports.postAddProduct = (req, res, next) => {
 
 exports.postEditProduct = (req, res, next) => {
   const productId = req.params.productId
-  Product.findByPk(productId)
-    .then((product) => {
+  req.user.getProducts({ where: { id: productId } })
+    .then((products) => {
       // If no product found, redirect to 404 page
+      const product = products[0]
       if (!product) {
         return res.status(404).redirect('/404')
       }
@@ -78,8 +79,7 @@ exports.deleteProduct = (req, res, next) => {
 }
 
 exports.getAdminProducts = (req, res, next) => {
-  Product
-    .findAll()
+  req.user.getProducts()
     .then(products => {
       res.render('admin/products.pug', { products: products, path: '/admin/products', pageTitle: 'Admin' })
     })
