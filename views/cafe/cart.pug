@@ -12,6 +12,9 @@ block content
               input(type="text" name="productId" value=(product.id) hidden)
               input(type="number" hidden name="price" value=(product.price))
               button.btn Delete
+      hr    
+      form.centerEle(action="/checkout" method="POST")
+        button.btn Checkout
     else
       h1 The cart is empty
       div Total price 0
