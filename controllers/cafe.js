@@ -65,7 +65,15 @@ exports.postCart = (req, res, next) => {
 }
 
 exports.orders = (req, res, next) => {
-  res.render('cafe/orders.pug', { path: '/orders', pageTitle: 'Orders' })
+  req.user
+    .getOrders({ include: ['products'] })
+    .then(orders => {
+      console.log("orderssss", orders)
+      res.render('cafe/orders.pug', { path: '/orders', pageTitle: 'Orders', orders: orders })
+    })
+    .catch(err => {
+      console.log(err)
+    })
 }
 
 exports.deleteCartProduct = (req, res, next) => {
@@ -90,10 +98,12 @@ exports.deleteCartProduct = (req, res, next) => {
 }
 
 exports.checkout = (req, res, next) => {
+  let fetchedCart
   let orderedProducts
   req.user
     .getCart()
     .then(cart => {
+      fetchedCart = cart
       return cart.getProducts()
     })
     .then(products => {
@@ -107,6 +117,9 @@ exports.checkout = (req, res, next) => {
         }
         return product
       }))
+    })
+    .then(result => {
+      return fetchedCart.setProducts(null)
     })
     .then(result => {
       res.redirect('./orders')
