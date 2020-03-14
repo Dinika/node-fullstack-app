@@ -37,20 +37,12 @@ exports.getCart = (req, res, next) => {
     .catch(err => {
       console.log(err)
     })
-  // Cart.fetchCart(cart => {
-  //   Product.fetchAll(products => {
-  //     const productsInCart = cart.products.map(p => {
-  //       const product = products.find(prod => prod.id === p.id)
-  //       const extendedProduct = { ...product, quantity: p.quantity }
-  //       return extendedProduct
-  //       })
-  //     })
-  //   })
 }
 
 exports.postCart = (req, res, next) => {
   const productId = req.body.productId
   let fetchedCart
+  let newQuantity
   req.user
     .getCart()
     .then(cart => {
@@ -59,14 +51,14 @@ exports.postCart = (req, res, next) => {
     })
     .then(products => {
       const product = products.length > 0 ? products[0] : null
-      const quantity = product ? 1 : 1
+      newQuantity = product ? product.cartItem.quantity + 1 : 1
       return Product.findByPk(productId)
-        .then(product => {
-          return fetchedCart.addProduct(product, { through: { quantity: quantity } })
-        })
+    })
+    .then(product => {
+      return fetchedCart.addProduct(product, { through: { quantity: newQuantity } })
     })
     .then(() => {
-      res.status(204)
+      res.redirect('/cart')
     })
     .catch(err => {
       console.log(err)
