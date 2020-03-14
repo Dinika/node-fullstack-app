@@ -8,6 +8,8 @@ const page404Controller = require('./controllers/error')
 const sequelize = require('./utilities/database')
 const Product = require('./model/product')
 const User = require('./model/user')
+const Cart = require('./model/cart')
+const CartItem = require('./model/cart-item')
 
 const app = express()
 
@@ -35,8 +37,12 @@ app.use('/', page404Controller.get404)
 
 Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' })
 User.hasMany(Product)
+User.hasOne(Cart)
+Cart.belongsTo(User)
+Cart.belongsToMany(Product, { through: CartItem })
+Product.belongsToMany(Cart, { through: CartItem })
 
-sequelize.sync()
+sequelize.sync({ force: true })
   .then(result => {
     return User.findByPk(1)
   })
