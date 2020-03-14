@@ -21,7 +21,7 @@ exports.getEditProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
   const { name, price, imageUrl, description } = req.body
-  Product.create({
+  req.user.createProduct({
     name: name,
     price: price,
     imageUrl: imageUrl,
