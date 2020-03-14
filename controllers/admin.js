@@ -55,7 +55,6 @@ exports.postEditProduct = (req, res, next) => {
       return product.save()
     })
     .then(result => {
-      console.log(`Updated product with id: ${result.dataValues.id}`)
       res.redirect('/admin/products')
     })
     .catch(err => {

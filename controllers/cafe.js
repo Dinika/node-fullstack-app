@@ -70,6 +70,22 @@ exports.orders = (req, res, next) => {
 }
 
 exports.deleteCartProduct = (req, res, next) => {
-  Cart.deleteProduct(req.body.productId, Number(req.body.price))
-  res.redirect('/')
+  req.user
+    .getCart()
+    .then(cart => {
+      return cart.getProducts({ where: { id: req.body.productId } })
+    })
+    .then(productToDelete => {
+      const product = productToDelete ? productToDelete[0] : null
+      if (product) {
+        return product.cartItem.destroy()
+      }
+      return
+    })
+    .then(result => {
+      res.redirect('/cart')
+    })
+    .catch(err => {
+      console.log(err)
+    })
 }
