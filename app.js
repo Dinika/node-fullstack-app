@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(admin.router)
 // app.use(cafeRoutes)
-// app.use('/', page404Controller.get404)
+app.use('/', page404Controller.get404)
 
 mongoConnect(() => {
   app.listen(4000)

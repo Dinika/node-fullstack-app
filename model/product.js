@@ -1,4 +1,3 @@
-const mongoConnect = require('../utilities/database')
 const getDB = require('../utilities/database').getDB
 
 class Product {
@@ -11,7 +10,7 @@ class Product {
 
   save() {
     const db = getDB()
-    db.connection('products')
+    return db.collection('products')
       .insertOne(this)
       .then(result => {
         console.log(result)
