@@ -53,6 +53,51 @@ class User {
       })
   }
 
+  deleteCartItem(productId) {
+    const updatedCartItems = this.cart.items.filter(i => i.productId.toString() !== productId.toString())
+    return this.updateCart(updatedCartItems)
+  }
+
+  checkout() {
+    const db = getDB()
+    return this.getCart()
+      .then(products => {
+        const order = {
+          items: products,
+          user: {
+            _id: new mongodb.ObjectID(this._id),
+            name: this.name
+          }
+        }
+        return db.collection('orders').insertOne(order)
+      })
+      .then(result => {
+        this.cart = { items: [] }
+        // Empty the cart
+        this.updateCart([])
+      })
+      .then(result => {
+        console.log("CART EMPTIED")
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
+  getOrders() {
+    const db = getDB()
+    // db.collection('orders')
+  }
+
+  updateCart(updatedCartItems) {
+    const db = getDB()
+    return db.collection('users')
+      .updateOne(
+        { _id: new mongodb.ObjectId(this._id) },
+        { $set: { cart: { items: updatedCartItems } } }
+      )
+  }
+
   save() {
     const db = getDB()
     return db.collection('users')

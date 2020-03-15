@@ -21,7 +21,6 @@ exports.postAddProduct = (req, res, next) => {
 exports.getEditProduct = (req, res, next) => {
   Product.findById(req.params.productId)
     .then(product => {
-      console.log(product)
       if (!product) {
         return res.status(404).redirect('/404')
       }
