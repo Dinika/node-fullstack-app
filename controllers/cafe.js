@@ -23,20 +23,17 @@ exports.getProduct = (req, res, next) => {
     })
 }
 
-// exports.getCart = (req, res, next) => {
-//   req.user
-//     .getCart()
-//     .then(cart => {
-//       console.log(cart)
-//       return cart.getProducts()
-//     })
-//     .then(productsInCart => {
-//       res.render('cafe/cart.pug', { path: '/cart', pageTitle: 'Cart', productsInCart: productsInCart, totalPrice: 0 })
-//     })
-//     .catch(err => {
-//       console.log(err)
-//     })
-// }
+exports.getCart = (req, res, next) => {
+  req.user
+    .getCart()
+    .then(productsInCart => {
+      console.log(productsInCart)
+      res.render('cafe/cart.pug', { path: '/cart', pageTitle: 'Cart', productsInCart: productsInCart, totalPrice: 0 })
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}
 
 exports.postCart = (req, res, next) => {
   const productId = req.body.productId
@@ -45,7 +42,7 @@ exports.postCart = (req, res, next) => {
       return req.user.addToCart(product)
     })
     .then(result => {
-      console.log('CART UPDATED')
+      res.redirect('/cart')
     })
     .catch(err => {
       console.log(err)
