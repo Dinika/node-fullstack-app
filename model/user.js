@@ -10,19 +10,26 @@ class User {
   }
 
   addToCart(product) {
-    // const cartProduct = this.cart.items.findIndex(product => {
-    //   return cart._id === product._id
-    // })
-
-    const updatedCart = {
-      items: [
+    const cartProductIndex = this.cart.items.findIndex(cartItem => {
+      return cartItem.productId.toString() == product._id.toString()
+    })
+    if (cartProductIndex > -1) {
+      console.log('Here')
+      // Product already exist in cart. Update its quantity
+      const productToUpdate = this.cart.items[cartProductIndex]
+      this.cart.items[cartProductIndex].quantity = ++productToUpdate.quantity
+    } else {
+      console.log('there')
+      // Product doesn't exist. Add new product to cart
+      this.cart.items = [
+        ...this.cart.items,
         {
           productId: new mongodb.ObjectId(product._id),
           quantity: 1
         }
       ]
     }
-
+    const updatedCart = this.cart
     const db = getDB()
     return db
       .collection('users')
