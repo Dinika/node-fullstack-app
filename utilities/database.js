@@ -1,13 +1,17 @@
-const Sequelize = require('sequelize')
+const mongodb = require('mongodb')
+const mongoSecrets = require('../secrets')
 
-const sequelize = new Sequelize(
-  'node_complete',
-  'root',
-  'MPsdshdc@174',
-  {
-    dialect: 'mysql',
-    host: 'localhost'
-  }
-)
+const MongoClient = mongodb.MongoClient
 
-module.exports = sequelize
+const mongoConnect = (callback) => {
+  MongoClient.connect(mongoSecrets.mongoConnectionUri)
+    .then(result => {
+      console.log('CONNECTED')
+      callback(result)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}
+
+module.exports = mongoConnect
