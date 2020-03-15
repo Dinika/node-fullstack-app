@@ -7,7 +7,7 @@ class Product {
     this.price = price
     this.description = description
     this.imageUrl = imageUrl
-    this._id = new mongoDb.ObjectId(_id)
+    this._id = _id ? new mongoDb.ObjectId(_id) : null
   }
 
   save() {
@@ -57,41 +57,9 @@ class Product {
 
   static delete(id) {
     const db = getDB()
-    db.collection('products')
+    return db.collection('products')
       .deleteOne({ _id: new mongoDb.ObjectId(id) })
   }
 }
 
 module.exports = Product
-
-
-// const Sequelize = require('sequelize')
-// const sequelize = require('../utilities/database')
-
-// const Product = sequelize.define(
-//   'product', {
-//   id: {
-//     type: Sequelize.INTEGER,
-//     autoIncrement: true,
-//     allowNull: false,
-//     primaryKey: true
-//   },
-//   name: {
-//     type: Sequelize.STRING,
-//     allowNull: false
-//   },
-//   price: {
-//     type: Sequelize.DOUBLE,
-//     allowNull: false
-//   },
-//   imageUrl: {
-//     type: Sequelize.STRING,
-//     allowNull: false
-//   },
-//   description: {
-//     type: Sequelize.STRING,
-//     allowNull: false
-//   }
-// }
-// )
-
