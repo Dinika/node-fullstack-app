@@ -9,7 +9,7 @@ block content
           li 
             p #{product.name} - #{product.cartItem.quantity}
             form(action="/delete-cart-product" method="POST")
-              input(type="text" name="productId" value=(product.id) hidden)
+              input(type="text" name="productId" value=(product._id) hidden)
               input(type="number" hidden name="price" value=(product.price))
               button.btn Delete
       hr    
