@@ -37,7 +37,9 @@ $ npm install
 
 If you don't have npm installed on your system click [here](https://www.npmjs.com/get-npm) for instructions on how to do that
 
-4. Build and run the code
+4. Enter your mongoDB connection uri in [utilities/database.js](https://github.com/Dinika/node-fullstack-app/blob/master/utilities/database.js#L7)
+
+5. Build and run the code
 
 ```
 $ npm start
