@@ -48,17 +48,16 @@ exports.postCart = (req, res, next) => {
     })
 }
 
-// exports.orders = (req, res, next) => {
-//   req.user
-//     .getOrders({ include: ['products'] })
-//     .then(orders => {
-//       console.log("orderssss", orders)
-//       res.render('cafe/orders.pug', { path: '/orders', pageTitle: 'Orders', orders: orders })
-//     })
-//     .catch(err => {
-//       console.log(err)
-//     })
-// }
+exports.getOrders = (req, res, next) => {
+  req.user
+    .getOrders()
+    .then(orders => {
+      res.render('cafe/orders.pug', { path: '/orders', pageTitle: 'Orders', orders: orders })
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}
 
 exports.deleteCartProduct = (req, res, next) => {
   req.user

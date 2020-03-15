@@ -86,7 +86,9 @@ class User {
 
   getOrders() {
     const db = getDB()
-    // db.collection('orders')
+    return db.collection('orders')
+      .find({ 'user._id': new mongodb.ObjectID(this._id) })
+      .toArray()
   }
 
   updateCart(updatedCartItems) {
