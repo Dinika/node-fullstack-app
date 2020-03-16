@@ -25,8 +25,10 @@ exports.getProduct = (req, res, next) => {
 
 exports.getCart = (req, res, next) => {
   req.user
-    .getCart()
-    .then(productsInCart => {
+    .populate('cart.items.productId')
+    .execPopulate()
+    .then(user => {
+      const productsInCart = user.cart.items
       res.render('cafe/cart.pug', { path: '/cart', pageTitle: 'Cart', productsInCart: productsInCart, totalPrice: 0 })
     })
     .catch(err => {

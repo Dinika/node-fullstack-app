@@ -7,7 +7,7 @@ block content
       ul
         each product in productsInCart
           li 
-            p #{product.name} - #{product.quantity}
+            p #{product.productId.name} - #{product.quantity}
             form(action="/delete-cart-product" method="POST")
               input(type="text" name="productId" value=(product._id) hidden)
               input(type="number" hidden name="price" value=(product.price))
