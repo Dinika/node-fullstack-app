@@ -7,6 +7,7 @@ A node application that implements an online cafe where users can view and shop 
 - node
 - express
 - mongoDB
+- mongoose
 - pug - as a templating engine
 - ~~mysql~~ (Replaced by sequelize since [#d398ef45](https://github.com/Dinika/node-fullstack-app/commit/d398ef45cc4502a51f379afeba8850ba2e916ebe))
 - ~~sequelize~~ (Replaced by mongoDB since [#424a1fe](https://github.com/Dinika/node-fullstack-app/commit/424a1fe4b63fe70081f0ead809555842fa9b1557))
@@ -37,7 +38,7 @@ $ npm install
 
 If you don't have npm installed on your system click [here](https://www.npmjs.com/get-npm) for instructions on how to do that
 
-4. Enter your mongoDB connection uri in [utilities/database.js](https://github.com/Dinika/node-fullstack-app/blob/master/utilities/database.js#L7)
+4. Enter your mongoDB connection uri in [app.js](https://github.com/Dinika/node-fullstack-app/blob/master/app.js#L34)
 
 5. Build and run the code
 
