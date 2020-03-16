@@ -40,18 +40,10 @@ userSchema.methods.addToCart = function (product) {
   return this.save()
 }
 
-userSchema.methods.getCart = function () {
-  const productsInCart = this.cart.items.map(i => i.productId)
-  return Product.find({ _id: { $in: productsInCart } })
-    .then(products => {
-      return products.map(p => {
-        console.log(p)
-        return {
-          ...p,
-          quantity: this.cart.items.find(i => i.productId.toString() === p._id.toString()).quantity
-        }
-      })
-    })
+userSchema.methods.deleteCartItem = function (productId) {
+  const updatedCartItems = this.cart.items.filter(i => i._id != productId)
+  this.cart.items = updatedCartItems
+  return this.save()
 }
 
 module.exports = mongoose.model('User', userSchema)
