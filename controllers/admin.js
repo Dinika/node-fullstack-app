@@ -37,9 +37,15 @@ exports.postEditProduct = (req, res, next) => {
   if (!productId) {
     return res.status(404).redirect('/404')
   }
-  const { name, price, imageUrl, description } = req.body
-  const updatedProduct = new Product(name, price, description, imageUrl, productId)
-  updatedProduct.save()
+  Product.findById(productId)
+    .then(product => {
+      // There must be a smarter way of doing this
+      product.name = req.body.name
+      product.description = req.body.description
+      product.imageUrl = req.body.imageUrl
+      product.price = req.body.price
+      return product.save()
+    })
     .then(result => {
       res.redirect('/admin/products')
     })
@@ -61,7 +67,8 @@ exports.deleteProduct = (req, res, next) => {
 }
 
 exports.getAdminProducts = (req, res, next) => {
-  Product.fetchAll()
+  Product
+    .find()
     .then(products => {
       res.render('admin/products.pug', { products: products, path: '/admin/products', pageTitle: 'Admin' })
     })
