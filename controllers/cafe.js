@@ -2,7 +2,7 @@ const Product = require('../model/product')
 
 exports.getProducts = (req, res, next) => {
   Product
-    .fetchAll()
+    .find()
     .then(products => {
       res.render('cafe/product-list.pug', { products: products, path: '/', pageTitle: 'Cafe' })
     })

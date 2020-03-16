@@ -7,9 +7,10 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
   const { name, price, imageUrl, description } = req.body
-  const product = new Product(name, price, imageUrl, description, null, req.user._id)
+  const product = new Product({ name, price, imageUrl, description })
 
-  product.save()
+  product
+    .save()
     .then(result => {
       res.redirect('/admin/products')
     })
