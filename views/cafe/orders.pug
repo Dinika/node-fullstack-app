@@ -8,5 +8,5 @@ block content
           li 
             h1 #{order.id} 
             ul
-              each item in order.items
-                li #{item.name} #{item.quantity}
+              each p in order.products
+                li #{p.product.name} #{p.product.quantity}

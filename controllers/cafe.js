@@ -52,8 +52,7 @@ exports.postCart = (req, res, next) => {
 }
 
 exports.getOrders = (req, res, next) => {
-  req.user
-    .getOrders()
+  Order.find({ "user.userId": req.user._id })
     .then(orders => {
       res.render('cafe/orders.pug', { path: '/orders', pageTitle: 'Orders', orders: orders })
     })
