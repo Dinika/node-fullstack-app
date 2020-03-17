@@ -90,6 +90,9 @@ exports.checkout = (req, res, next) => {
       })
       order.save()
     })
+    .then(() => {
+      return req.user.clearCart()
+    })
     .then(result => {
       res.redirect('./orders')
     })
