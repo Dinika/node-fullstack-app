@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 html(lang="en")
   head
     meta(charset="UTF-8")
@@ -24,4 +24,7 @@ html(lang="en")
           li.main-header__item
             a(href="/admin/products", class=(path === '/admin/products' ? 'active' : '')) Admin products
 
+        ul.main-header__item-list
+          li.main-header__item
+            a(href="/login", class=(path === '/authentication/login' ? 'active' : '')) Login
     block content
