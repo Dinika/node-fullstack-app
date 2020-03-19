@@ -9,10 +9,15 @@ const path = require('path')
 const page404Controller = require('./controllers/error')
 const mongoose = require('mongoose')
 const connectionUri = require('./secrets').mongoConnectionUri
+const sessionSecret = require('./secrets').sessionSecret
 const session = require('express-session')
+const MongoDbStore = require('connect-mongodb-session')(session)
 
 const app = express()
-
+const store = new MongoDbStore({
+  uri: connectionUri,
+  collection: 'sessions'
+})
 
 app.set('view engine', 'pug')
 app.set('views', 'views')
@@ -21,7 +26,7 @@ app.use(express.static(path.join(rootDir, 'public')))
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(
-  session({ secret: 'my secret', resave: false, saveUninitialized: false })
+  session({ secret: sessionSecret, resave: false, saveUninitialized: false, store: store })
 )
 
 app.use((req, res, next) => {
