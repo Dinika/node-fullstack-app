@@ -9,6 +9,7 @@ const path = require('path')
 const page404Controller = require('./controllers/error')
 const mongoose = require('mongoose')
 const connectionUri = require('./secrets').mongoConnectionUri
+const session = require('express-session')
 
 const app = express()
 
@@ -18,6 +19,8 @@ app.set('views', 'views')
 
 app.use(express.static(path.join(rootDir, 'public')))
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(session({ secret: 'HMYUI2CD', resave: false, saveUninitialized: false }))
+
 app.use((req, res, next) => {
   User.findById('5e6ffef56ae68b3310f0d465')
     .then(user => {
