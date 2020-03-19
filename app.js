@@ -19,7 +19,10 @@ app.set('views', 'views')
 
 app.use(express.static(path.join(rootDir, 'public')))
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(session({ secret: 'HMYUI2CD', resave: false, saveUninitialized: false }))
+
+app.use(
+  session({ secret: 'my secret', resave: false, saveUninitialized: false })
+)
 
 app.use((req, res, next) => {
   User.findById('5e6ffef56ae68b3310f0d465')
