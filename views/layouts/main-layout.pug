@@ -20,9 +20,9 @@ html(lang="en")
           li.main-header__item
             a(href="/orders", class=(path === '/orders' ? 'active' : '')) Orders
           li.main-header__item
-            a(href='/admin/add-product', class=(path === '/admin/add-product' ? 'active' : '')) Add products
+            a(href='/admin/add-product', class=([path === '/admin/add-product' ? 'active' : '', isLoggedIn ? '' : 'hidden' ])) Add products
           li.main-header__item
-            a(href="/admin/products", class=(path === '/admin/products' ? 'active' : '')) Admin products
+            a(href="/admin/products", class=([path === '/admin/products' ? 'active' : '', isLoggedIn ? '' : 'hidden' ])) Admin products
 
         ul.main-header__item-list
           li.main-header__item
