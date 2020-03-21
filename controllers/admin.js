@@ -2,12 +2,12 @@ const Product = require('../model/product')
 const mongodb = require('mongodb')
 
 exports.getAddProduct = (req, res, next) => {
-  res.render('admin/edit-product', { path: '/admin/add-product', pageTitle: 'Add product' })
+  res.render('admin/edit-product', { path: '/admin/add-product', pageTitle: 'Add product', isLoggedIn: req.session.isLoggedIn })
 }
 
 exports.postAddProduct = (req, res, next) => {
   const { name, price, imageUrl, description } = req.body
-  const product = new Product({ name, price, imageUrl, description, userId: req.user })
+  const product = new Product({ name, price, imageUrl, description, userId: req.session.user })
 
   product
     .save()
@@ -25,7 +25,7 @@ exports.getEditProduct = (req, res, next) => {
       if (!product) {
         return res.status(404).redirect('/404')
       }
-      res.render('admin/edit-product', { path: '', pageTitle: 'Edit product', product: product, editMode: true })
+      res.render('admin/edit-product', { path: '', pageTitle: 'Edit product', product: product, editMode: true, isLoggedIn: req.session.isLoggedIn })
     })
     .catch(err => {
       console.log(err)
@@ -70,7 +70,7 @@ exports.getAdminProducts = (req, res, next) => {
   Product
     .find()
     .then(products => {
-      res.render('admin/products.pug', { products: products, path: '/admin/products', pageTitle: 'Admin' })
+      res.render('admin/products.pug', { products: products, path: '/admin/products', pageTitle: 'Admin', isLoggedIn: req.session.isLoggedIn })
     })
     .catch(err => {
       console.log(err)

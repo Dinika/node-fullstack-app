@@ -199,6 +199,20 @@ form {
   color: white;
 }
 
+.button__link {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.button__link:hover,
+.button__link:active {
+  background-color: transparent;
+  color: #ffeb3b;
+}
+
 .center {
   text-align: center;
 }

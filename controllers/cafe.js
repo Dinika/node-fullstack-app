@@ -5,7 +5,7 @@ exports.getProducts = (req, res, next) => {
   Product
     .find()
     .then(products => {
-      res.render('cafe/product-list.pug', { products: products, path: '/', pageTitle: 'Cafe' })
+      res.render('cafe/product-list.pug', { products: products, path: '/', pageTitle: 'Cafe', isLoggedIn: req.session.isLoggedIn })
     })
     .catch(err => {
       console.log(err)
@@ -17,7 +17,7 @@ exports.getProduct = (req, res, next) => {
   Product
     .findById(productId)
     .then((product) => {
-      res.render('cafe/product-detail.pug', { product: product, path: '/products' })
+      res.render('cafe/product-detail.pug', { product: product, path: '/products', isLoggedIn: req.session.isLoggedIn })
     })
     .catch(err => {
       console.log(err)
@@ -25,23 +25,27 @@ exports.getProduct = (req, res, next) => {
 }
 
 exports.getCart = (req, res, next) => {
-  req.user
-    .populate('cart.items.productId')
-    .execPopulate()
-    .then(user => {
-      const productsInCart = user.cart.items
-      res.render('cafe/cart.pug', { path: '/cart', pageTitle: 'Cart', productsInCart: productsInCart, totalPrice: 0 })
-    })
-    .catch(err => {
-      console.log(err)
-    })
+  if (!req.session.user) {
+    res.redirect('/')
+  } else {
+    req.session.user
+      .populate('cart.items.productId')
+      .execPopulate()
+      .then(user => {
+        const productsInCart = user.cart.items
+        res.render('cafe/cart.pug', { path: '/cart', pageTitle: 'Cart', productsInCart: productsInCart, totalPrice: 0, isLoggedIn: req.session.isLoggedIn })
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
 }
 
 exports.postCart = (req, res, next) => {
   const productId = req.body.productId
   Product.findById(productId)
     .then(product => {
-      return req.user.addToCart(product)
+      return req.session.user.addToCart(product)
     })
     .then(result => {
       res.redirect('/cart')
@@ -52,9 +56,9 @@ exports.postCart = (req, res, next) => {
 }
 
 exports.getOrders = (req, res, next) => {
-  Order.find({ "user.userId": req.user._id })
+  Order.find({ "user.userId": req.session.user._id })
     .then(orders => {
-      res.render('cafe/orders.pug', { path: '/orders', pageTitle: 'Orders', orders: orders })
+      res.render('cafe/orders.pug', { path: '/orders', pageTitle: 'Orders', orders: orders, isLoggedIn: req.session.isLoggedIn })
     })
     .catch(err => {
       console.log(err)
@@ -62,7 +66,7 @@ exports.getOrders = (req, res, next) => {
 }
 
 exports.deleteCartProduct = (req, res, next) => {
-  req.user
+  req.session.user
     .deleteCartItem(req.body.productId)
     .then(result => {
       res.redirect('/cart')
@@ -73,7 +77,7 @@ exports.deleteCartProduct = (req, res, next) => {
 }
 
 exports.checkout = (req, res, next) => {
-  req.user
+  req.session.user
     .populate('cart.items.productId')
     .execPopulate()
     .then(user => {
@@ -82,15 +86,15 @@ exports.checkout = (req, res, next) => {
       })
       const order = new Order({
         user: {
-          name: req.user.name,
-          userId: req.user
+          name: req.session.user.name,
+          userId: req.session.user
         },
         products: productsInCart
       })
       order.save()
     })
     .then(() => {
-      return req.user.clearCart()
+      return req.session.user.clearCart()
     })
     .then(result => {
       res.redirect('./orders')

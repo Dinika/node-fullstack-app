@@ -29,16 +29,6 @@ app.use(
   session({ secret: sessionSecret, resave: false, saveUninitialized: false, store: store })
 )
 
-app.use((req, res, next) => {
-  User.findById('5e6ffef56ae68b3310f0d465')
-    .then(user => {
-      req.user = user
-      next()
-    })
-    .catch(err => {
-      console.log(err)
-    })
-})
 app.use(admin.router)
 app.use(cafeRoutes)
 app.use(authRoutes)
