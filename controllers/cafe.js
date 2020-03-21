@@ -28,7 +28,7 @@ exports.getCart = (req, res, next) => {
   if (!req.session.user) {
     res.redirect('/')
   } else {
-    req.session.user
+    req.user
       .populate('cart.items.productId')
       .execPopulate()
       .then(user => {
@@ -45,7 +45,7 @@ exports.postCart = (req, res, next) => {
   const productId = req.body.productId
   Product.findById(productId)
     .then(product => {
-      return req.session.user.addToCart(product)
+      return req.user.addToCart(product)
     })
     .then(result => {
       res.redirect('/cart')
@@ -56,7 +56,7 @@ exports.postCart = (req, res, next) => {
 }
 
 exports.getOrders = (req, res, next) => {
-  Order.find({ "user.userId": req.session.user._id })
+  Order.find({ "user.userId": req.user._id })
     .then(orders => {
       res.render('cafe/orders.pug', { path: '/orders', pageTitle: 'Orders', orders: orders, isLoggedIn: req.session.isLoggedIn })
     })
@@ -66,7 +66,7 @@ exports.getOrders = (req, res, next) => {
 }
 
 exports.deleteCartProduct = (req, res, next) => {
-  req.session.user
+  req.user
     .deleteCartItem(req.body.productId)
     .then(result => {
       res.redirect('/cart')
@@ -77,7 +77,7 @@ exports.deleteCartProduct = (req, res, next) => {
 }
 
 exports.checkout = (req, res, next) => {
-  req.session.user
+  req.user
     .populate('cart.items.productId')
     .execPopulate()
     .then(user => {
@@ -86,15 +86,15 @@ exports.checkout = (req, res, next) => {
       })
       const order = new Order({
         user: {
-          name: req.session.user.name,
-          userId: req.session.user
+          name: req.user.name,
+          userId: req.user
         },
         products: productsInCart
       })
       order.save()
     })
     .then(() => {
-      return req.session.user.clearCart()
+      return req.user.clearCart()
     })
     .then(result => {
       res.redirect('./orders')

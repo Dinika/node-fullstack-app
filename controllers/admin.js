@@ -7,7 +7,7 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
   const { name, price, imageUrl, description } = req.body
-  const product = new Product({ name, price, imageUrl, description, userId: req.session.user })
+  const product = new Product({ name, price, imageUrl, description, userId: req.user })
 
   product
     .save()

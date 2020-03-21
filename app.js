@@ -29,6 +29,21 @@ app.use(
   session({ secret: sessionSecret, resave: false, saveUninitialized: false, store: store })
 )
 
+app.use((req, res, next) => {
+  if (!req.session.user) {
+    next()
+  } else {
+    User.findById(req.session.user._id)
+      .then(user => {
+        req.user = user
+        next()
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+})
+
 app.use(admin.router)
 app.use(cafeRoutes)
 app.use(authRoutes)
