@@ -8,4 +8,5 @@ block content
     h2 #{product.price}
     p #{product.description}
 
-    include ../layouts/add-to-cart.pug
+    if isLoggedIn
+      include ../layouts/add-to-cart.pug
