@@ -1,7 +1,7 @@
 const User = require('../model/user')
 
 exports.getLogin = (req, res, next) => {
-  res.render('authentication/login.pug', { path: '/authentication/login', pageTitle: 'Login', isLoggedIn: req.session.isLoggedIn })
+  res.render('authentication/login.pug', { path: '/authentication/login', pageTitle: 'Cafe Login', isLoggedIn: req.session.isLoggedIn })
 }
 
 exports.postLogin = (req, res, next) => {
@@ -19,6 +19,14 @@ exports.postLogin = (req, res, next) => {
     .catch(err => {
       console.log(err)
     })
+
+}
+
+exports.getSignup = (req, res, next) => {
+  res.render('authentication/signup.pug', { path: '/authentication/signup', pageTitle: 'Cafe Signup', isLoggedIn: req.session.isLoggedIn })
+}
+
+exports.postSignup = (req, res, next) => {
 
 }
 
