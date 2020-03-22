@@ -13,6 +13,7 @@ const sessionSecret = require('./secrets').sessionSecret
 const session = require('express-session')
 const MongoDbStore = require('connect-mongodb-session')(session)
 const csurf = require('csurf')
+const flash = require('connect-flash')
 
 const app = express()
 const store = new MongoDbStore({
@@ -31,6 +32,7 @@ app.use(
   session({ secret: sessionSecret, resave: false, saveUninitialized: false, store: store })
 )
 app.use(csrfProtection)
+app.use(flash())
 
 app.use((req, res, next) => {
   if (!req.session.user) {

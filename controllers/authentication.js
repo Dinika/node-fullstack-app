@@ -2,7 +2,12 @@ const User = require('../model/user')
 const bcrypt = require('bcryptjs')
 
 exports.getLogin = (req, res, next) => {
-  res.render('authentication/login.pug', { path: '/authentication/login', pageTitle: 'Cafe Login' })
+  res.render('authentication/login.pug',
+    {
+      path: '/authentication/login',
+      pageTitle: 'Cafe Login',
+      errorMessage: req.flash('error')
+    })
 }
 
 exports.postLogin = (req, res, next) => {
@@ -10,7 +15,7 @@ exports.postLogin = (req, res, next) => {
   return User.findOne({ email: email })
     .then(user => {
       if (!user) {
-        console.log("User with this email does not exist")
+        req.flash('error', 'Invalid email or password')
         return res.redirect('/login')
       }
       bcrypt.compare(password, user.password)
@@ -50,6 +55,7 @@ exports.postSignup = (req, res, next) => {
   User.findOne({ email: email })
     .then(maybeUser => {
       if (maybeUser) {
+        req.flash('error', 'Invalid email or password')
         return res.redirect('/login')
       }
       return bcrypt.hash(password, 12)
