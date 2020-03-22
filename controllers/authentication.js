@@ -1,4 +1,5 @@
 const User = require('../model/user')
+const bcrypt = require('bcryptjs')
 
 exports.getLogin = (req, res, next) => {
   res.render('authentication/login.pug', { path: '/authentication/login', pageTitle: 'Cafe Login', isLoggedIn: req.session.isLoggedIn })
@@ -27,7 +28,29 @@ exports.getSignup = (req, res, next) => {
 }
 
 exports.postSignup = (req, res, next) => {
+  const { email, confirmPassword, password } = req.body
 
+  User.findOne({ email: email })
+    .then(maybeUser => {
+      if (maybeUser) {
+        return res.redirect('/login')
+      }
+      return bcrypt.hash(password, 12)
+    })
+    .then(encryptedPassword => {
+      const user = new User({
+        email: email,
+        password: encryptedPassword,
+        cart: { items: [] }
+      })
+      return user.save()
+    })
+    .then(result => {
+      res.redirect('/login')
+    })
+    .catch(err => {
+      console.log(err)
+    })
 }
 
 exports.postLogout = (req, res, next) => {

@@ -50,21 +50,6 @@ app.use(authRoutes)
 app.use('/', page404Controller.get404)
 
 mongoose.connect(connectionUri)
-  .then(result => {
-    return User.findOne()
-  })
-  .then(user => {
-    if (!user) {
-      const user = new User({
-        name: 'Dinika',
-        email: 'dinikasaxenas@gmail.com',
-        cart: {
-          items: []
-        }
-      })
-      user.save()
-    }
-  })
   .then(() => {
     app.listen(4000)
   })
