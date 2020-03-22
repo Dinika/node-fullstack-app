@@ -2,6 +2,9 @@ const Product = require('../model/product')
 const mongodb = require('mongodb')
 
 exports.getAddProduct = (req, res, next) => {
+  if (!req.session.isLoggedIn) {
+    return res.redirect('/login')
+  }
   res.render('admin/edit-product', { path: '/admin/add-product', pageTitle: 'Add product', isLoggedIn: req.session.isLoggedIn })
 }
 
