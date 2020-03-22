@@ -71,9 +71,13 @@ exports.deleteProduct = (req, res, next) => {
 
 exports.getAdminProducts = (req, res, next) => {
   Product
-    .find()
+    .find({ userId: req.user._id })
     .then(products => {
-      res.render('admin/products.pug', { products: products, path: '/admin/products', pageTitle: 'Admin' })
+      res.render('admin/products.pug',
+        {
+          products: products,
+          path: '/admin/products', pageTitle: 'Admin'
+        })
     })
     .catch(err => {
       console.log(err)
