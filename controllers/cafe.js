@@ -5,7 +5,14 @@ exports.getProducts = (req, res, next) => {
   Product
     .find()
     .then(products => {
-      res.render('cafe/product-list.pug', { products: products, path: '/', pageTitle: 'Cafe', isLoggedIn: req.session.isLoggedIn })
+      res.render('cafe/product-list.pug',
+        {
+          products: products,
+          path: '/',
+          pageTitle: 'Cafe',
+          isLoggedIn: req.session.isLoggedIn,
+          csrfToken: req.csrfToken()
+        })
     })
     .catch(err => {
       console.log(err)

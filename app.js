@@ -12,12 +12,14 @@ const connectionUri = require('./secrets').mongoConnectionUri
 const sessionSecret = require('./secrets').sessionSecret
 const session = require('express-session')
 const MongoDbStore = require('connect-mongodb-session')(session)
+const csurf = require('csurf')
 
 const app = express()
 const store = new MongoDbStore({
   uri: connectionUri,
   collection: 'sessions'
 })
+const csrfProtection = csurf()
 
 app.set('view engine', 'pug')
 app.set('views', 'views')
@@ -28,6 +30,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(
   session({ secret: sessionSecret, resave: false, saveUninitialized: false, store: store })
 )
+app.use(csrfProtection)
 
 app.use((req, res, next) => {
   if (!req.session.user) {

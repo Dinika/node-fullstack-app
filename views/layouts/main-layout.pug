@@ -34,5 +34,6 @@ html(lang="en")
           else
             li.main-header__item
               form(action="/logout" method="post")
+                input(type='hidden' name='_csrf' value='csrfToken')
                 button(type="submit" class="button__link") Logout
     block content
