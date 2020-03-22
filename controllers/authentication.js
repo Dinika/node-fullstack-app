@@ -6,21 +6,38 @@ exports.getLogin = (req, res, next) => {
 }
 
 exports.postLogin = (req, res, next) => {
-  return User.findById('5e6ffef56ae68b3310f0d465')
+  const { email, password } = req.body
+  return User.findOne({ email: email })
     .then(user => {
-      req.session.isLoggedIn = true
-      req.session.user = user
-      req.session.save((err) => {
-        if (err) {
-          console.log(err)
-        }
-        res.redirect('/')
-      })
+      if (!user) {
+        console.log("User with this email does not exist")
+        return res.redirect('/login')
+      }
+      bcrypt.compare(password, user.password)
+        .then(isValidPassword => {
+          if (isValidPassword) {
+            req.session.isLoggedIn = true
+            req.session.user = user
+            return req.session.save((err) => {
+              if (err) {
+                console.error("Error when saving user session")
+                console.log(err)
+              }
+              res.redirect('/')
+            })
+          } else {
+            console.debug("User entered invalid password")
+            res.redirect('/login')
+          }
+        })
+        .catch(err => {
+          console.error("User lookup failed")
+          res.redirect('/login')
+        })
     })
     .catch(err => {
       console.log(err)
     })
-
 }
 
 exports.getSignup = (req, res, next) => {
