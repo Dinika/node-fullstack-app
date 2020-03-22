@@ -22,7 +22,7 @@ exports.getProduct = (req, res, next) => {
   Product
     .findById(productId)
     .then((product) => {
-      res.render('cafe/product-detail.pug', { product: product, path: '/products', isLoggedIn: req.session.isLoggedIn })
+      res.render('cafe/product-detail.pug', { product: product, path: '/products' })
     })
     .catch(err => {
       console.log(err)
@@ -38,7 +38,7 @@ exports.getCart = (req, res, next) => {
       .execPopulate()
       .then(user => {
         const productsInCart = user.cart.items
-        res.render('cafe/cart.pug', { path: '/cart', pageTitle: 'Cart', productsInCart: productsInCart, totalPrice: 0, isLoggedIn: req.session.isLoggedIn })
+        res.render('cafe/cart.pug', { path: '/cart', pageTitle: 'Cart', productsInCart: productsInCart, totalPrice: 0 })
       })
       .catch(err => {
         console.log(err)
@@ -63,7 +63,7 @@ exports.postCart = (req, res, next) => {
 exports.getOrders = (req, res, next) => {
   Order.find({ "user.userId": req.user._id })
     .then(orders => {
-      res.render('cafe/orders.pug', { path: '/orders', pageTitle: 'Orders', orders: orders, isLoggedIn: req.session.isLoggedIn })
+      res.render('cafe/orders.pug', { path: '/orders', pageTitle: 'Orders', orders: orders })
     })
     .catch(err => {
       console.log(err)

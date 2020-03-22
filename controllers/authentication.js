@@ -2,7 +2,7 @@ const User = require('../model/user')
 const bcrypt = require('bcryptjs')
 
 exports.getLogin = (req, res, next) => {
-  res.render('authentication/login.pug', { path: '/authentication/login', pageTitle: 'Cafe Login', isLoggedIn: req.session.isLoggedIn })
+  res.render('authentication/login.pug', { path: '/authentication/login', pageTitle: 'Cafe Login' })
 }
 
 exports.postLogin = (req, res, next) => {
@@ -41,7 +41,7 @@ exports.postLogin = (req, res, next) => {
 }
 
 exports.getSignup = (req, res, next) => {
-  res.render('authentication/signup.pug', { path: '/authentication/signup', pageTitle: 'Cafe Signup', isLoggedIn: req.session.isLoggedIn })
+  res.render('authentication/signup.pug', { path: '/authentication/signup', pageTitle: 'Cafe Signup' })
 }
 
 exports.postSignup = (req, res, next) => {

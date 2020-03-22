@@ -5,7 +5,7 @@ exports.getAddProduct = (req, res, next) => {
   if (!req.session.isLoggedIn) {
     return res.redirect('/login')
   }
-  res.render('admin/edit-product', { path: '/admin/add-product', pageTitle: 'Add product', isLoggedIn: req.session.isLoggedIn })
+  res.render('admin/edit-product', { path: '/admin/add-product', pageTitle: 'Add product' })
 }
 
 exports.postAddProduct = (req, res, next) => {
@@ -28,7 +28,7 @@ exports.getEditProduct = (req, res, next) => {
       if (!product) {
         return res.status(404).redirect('/404')
       }
-      res.render('admin/edit-product', { path: '', pageTitle: 'Edit product', product: product, editMode: true, isLoggedIn: req.session.isLoggedIn })
+      res.render('admin/edit-product', { path: '', pageTitle: 'Edit product', product: product, editMode: true })
     })
     .catch(err => {
       console.log(err)
@@ -73,7 +73,7 @@ exports.getAdminProducts = (req, res, next) => {
   Product
     .find()
     .then(products => {
-      res.render('admin/products.pug', { products: products, path: '/admin/products', pageTitle: 'Admin', isLoggedIn: req.session.isLoggedIn })
+      res.render('admin/products.pug', { products: products, path: '/admin/products', pageTitle: 'Admin' })
     })
     .catch(err => {
       console.log(err)
