@@ -128,7 +128,7 @@ exports.postResetPassword = (req, res, next) => {
         return user.save()
       })
       .then(result => {
-        const resetLink = `http://localhost:4000/reset-password/${token}`
+        const resetLink = `http://localhost:4000/new-password/${token}`
         res.redirect('/')
         return transporter.sendMail({
           to: req.body.email,
@@ -136,7 +136,7 @@ exports.postResetPassword = (req, res, next) => {
           subject: 'Password reset',
           html: `
             <p>You requested oassword reset</p>
-            <p>Click <a href=${resetLink}>here</a> to reset password </p>
+            <p>Click <a href=${resetLink}>here</a> to reset your password. </p>
           `
         })
       })
@@ -144,4 +144,21 @@ exports.postResetPassword = (req, res, next) => {
         console.log(err)
       })
   })
+}
+
+exports.getNewPassword = (req, res, next) => {
+  const token = req.params.token
+  User.findOne({ resetToken: token, resetTokenExpiration: { $gt: Date.now() } })
+    .then(user => {
+      return res.render('authentication/new-password.pug',
+        {
+          path: '/authentication/new-password',
+          pageTitle: 'Cafe - New Password',
+          errorMessage: req.flash('error') ? req.flash('error')[0] : undefined,
+          userId: user._id.toString()
+        })
+    })
+    .catch(err => {
+      console.log(err)
+    })
 }
