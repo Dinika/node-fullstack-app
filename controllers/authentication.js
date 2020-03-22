@@ -148,15 +148,51 @@ exports.postResetPassword = (req, res, next) => {
 
 exports.getNewPassword = (req, res, next) => {
   const token = req.params.token
-  User.findOne({ resetToken: token, resetTokenExpiration: { $gt: Date.now() } })
+  User.findOne({
+    resetToken: token,
+    //resetTokenExpiration: { $gt: Date.now() }
+  })
     .then(user => {
       return res.render('authentication/new-password.pug',
         {
           path: '/authentication/new-password',
           pageTitle: 'Cafe - New Password',
           errorMessage: req.flash('error') ? req.flash('error')[0] : undefined,
-          userId: user._id.toString()
+          userId: user._id.toString(),
+          passwordToken: token
         })
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}
+
+exports.postNewPassword = (req, res, next) => {
+  const { password, userId, passwordToken } = req.body
+  console.log(userId)
+  let user
+  User.findOne(
+    {
+      resetToken: passwordToken,
+      resetTokenExpiration: { $gt: Date.now() },
+      _id: userId
+    })
+    .then(maybeUser => {
+      if (!maybeUser) {
+        req.flash('error', 'Sorry! An error occurred when saving new password')
+        return res.redirect('/login')
+      }
+      user = maybeUser
+      return bcrypt.hash(password, 12)
+    })
+    .then(encryptedPassword => {
+      user.password = encryptedPassword
+      user.resetToken = undefined
+      user.resetTokenExpiration = undefined
+      return user.save()
+    })
+    .then(result => {
+      res.redirect('/login')
     })
     .catch(err => {
       console.log(err)
