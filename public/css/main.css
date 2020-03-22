@@ -207,6 +207,13 @@ form {
   cursor: pointer;
 }
 
+.user-message__error {
+  margin: auto;
+  width: 100%;
+  text-align: center;
+  color: rgb(246, 84, 84);
+}
+
 .button__link:hover,
 .button__link:active {
   background-color: transparent;

@@ -6,7 +6,7 @@ exports.getLogin = (req, res, next) => {
     {
       path: '/authentication/login',
       pageTitle: 'Cafe Login',
-      errorMessage: req.flash('error')
+      errorMessage: req.flash('error')[0]
     })
 }
 
