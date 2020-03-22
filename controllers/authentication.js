@@ -31,8 +31,8 @@ exports.postLogin = (req, res, next) => {
               res.redirect('/')
             })
           } else {
-            console.debug("User entered invalid password")
-            res.redirect('/login')
+            req.flash('error', 'Invalid email or password')
+            return res.redirect('/login')
           }
         })
         .catch(err => {
@@ -55,7 +55,7 @@ exports.postSignup = (req, res, next) => {
   User.findOne({ email: email })
     .then(maybeUser => {
       if (maybeUser) {
-        req.flash('error', 'Invalid email or password')
+        req.flash('error', 'Email already registered')
         return res.redirect('/login')
       }
       return bcrypt.hash(password, 12)

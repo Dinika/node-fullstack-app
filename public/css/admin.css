@@ -3,6 +3,8 @@
   max-width: 90%;
   margin: auto;
   display: block;
+  /* flex-direction: column; */
+  /* justify-content: unset; */
 }
 
 .product-item {
