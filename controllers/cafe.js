@@ -9,9 +9,7 @@ exports.getProducts = (req, res, next) => {
         {
           products: products,
           path: '/',
-          pageTitle: 'Cafe',
-          isLoggedIn: req.session.isLoggedIn,
-          csrfToken: req.csrfToken()
+          pageTitle: 'Cafe'
         })
     })
     .catch(err => {

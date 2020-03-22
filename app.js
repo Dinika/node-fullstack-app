@@ -47,6 +47,12 @@ app.use((req, res, next) => {
   }
 })
 
+app.use((req, res, next) => {
+  res.locals.isLoggedIn = req.session.isLoggedIn
+  res.locals.csrfToken = req.csrfToken()
+  next()
+})
+
 app.use(admin.router)
 app.use(cafeRoutes)
 app.use(authRoutes)
