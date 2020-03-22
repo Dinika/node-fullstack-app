@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs')
 const nodeMailer = require('nodemailer')
 const sendGridTransport = require('nodemailer-sendgrid-transport')
 const sendgridApiKey = require('../secrets').sendgridApiKey
+const crypto = require('crypto')
 
 const transporter = nodeMailer.createTransport(
   sendGridTransport({
@@ -17,7 +18,7 @@ exports.getLogin = (req, res, next) => {
     {
       path: '/authentication/login',
       pageTitle: 'Cafe Login',
-      errorMessage: req.flash('error')[0]
+      errorMessage: req.flash('error') ? req.flash('error')[0] : undefined
     })
 }
 
@@ -61,7 +62,7 @@ exports.getSignup = (req, res, next) => {
 }
 
 exports.postSignup = (req, res, next) => {
-  const { email, confirmPassword, password } = req.body
+  const { email, password } = req.body
 
   User.findOne({ email: email })
     .then(maybeUser => {
@@ -97,5 +98,50 @@ exports.postLogout = (req, res, next) => {
   req.session.destroy(err => {
     console.log(err)
     res.redirect('/')
+  })
+}
+
+exports.getResetPassword = (req, res, next) => {
+  res.render('authentication/reset-password.pug',
+    {
+      path: '/authentication/reset-password',
+      pageTitle: 'Cafe - Reset Password',
+      errorMessage: req.flash('error') ? req.flash('error')[0] : undefined
+    })
+}
+
+exports.postResetPassword = (req, res, next) => {
+  crypto.randomBytes(32, (err, buffer) => {
+    if (err) {
+      console.log(err)
+      return res.redirect('/reset-password')
+    }
+    const token = buffer.toString('hex')
+    User.findOne({ email: req.body.email })
+      .then(user => {
+        if (!user) {
+          req.flash('error', 'No user with this email found')
+          return res.redirect('/reset-password')
+        }
+        user.resetToken = token
+        user.resetTokenExpiration = Date.now() + 3600000
+        return user.save()
+      })
+      .then(result => {
+        const resetLink = `http://localhost:4000/reset-password/${token}`
+        res.redirect('/')
+        return transporter.sendMail({
+          to: req.body.email,
+          from: 'cafe@dinika.com',
+          subject: 'Password reset',
+          html: `
+            <p>You requested oassword reset</p>
+            <p>Click <a href=${resetLink}>here</a> to reset password </p>
+          `
+        })
+      })
+      .catch(err => {
+        console.log(err)
+      })
   })
 }

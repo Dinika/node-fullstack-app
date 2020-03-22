@@ -14,5 +14,7 @@ block content
       .form-control
         label(for="password") Password
         input(type="password" name="password" id="password")
+      .margin-bottom
+        a(href='/reset-password' class='link') Reset password
       input(type='hidden' name='_csrf' value=csrfToken)
       button(type="submit") Login
