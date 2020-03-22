@@ -1,5 +1,16 @@
 const User = require('../model/user')
 const bcrypt = require('bcryptjs')
+const nodeMailer = require('nodemailer')
+const sendGridTransport = require('nodemailer-sendgrid-transport')
+const sendgridApiKey = require('../secrets').sendgridApiKey
+
+const transporter = nodeMailer.createTransport(
+  sendGridTransport({
+    auth: {
+      api_key: sendgridApiKey
+    }
+  })
+)
 
 exports.getLogin = (req, res, next) => {
   res.render('authentication/login.pug',
@@ -69,6 +80,12 @@ exports.postSignup = (req, res, next) => {
         })
         .then(result => {
           res.redirect('/login')
+          return transporter.sendMail({
+            to: email,
+            from: 'cafe@dinika.com',
+            subject: 'Signup successful',
+            html: '<h1>You have successfully registered to our online cafe!</h1>'
+          })
         })
     })
     .catch(err => {
