@@ -9,8 +9,10 @@ router.post('/login',
   [
     check('email')
       .isEmail()
+      .normalizeEmail()
       .withMessage('Invalid e-mail'),
     check('password')
+      .trim()
       .isLength({ min: 6 })
       .withMessage('Password should be atleast 6 characters long')
   ],
@@ -22,6 +24,7 @@ router.post('/signup',
   [
     check('email')
       .isEmail()
+      .normalizeEmail()
       .withMessage('Invalid e-mail')
       .custom((value, { req }) => {
         return User.findOne({ email: value })
@@ -32,9 +35,11 @@ router.post('/signup',
           })
       }),
     body('password', 'Password should be atleast 6 characters long')
+      .trim()
       .isLength({ min: 6 })
       .isAlphanumeric(),
     body('confirmPassword')
+      .trim()
       .custom((value, { req }) => {
         if (value !== req.body.password) {
           throw new Error('Passwords do not match')

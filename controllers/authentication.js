@@ -28,6 +28,7 @@ exports.getLogin = (req, res, next) => {
     })
 }
 
+// TODO: use getLogin() when rendering login in case of errors
 exports.postLogin = (req, res, next) => {
   const { email, password } = req.body
   const errors = validationResult(req)
@@ -49,8 +50,17 @@ exports.postLogin = (req, res, next) => {
   return User.findOne({ email: email })
     .then(user => {
       if (!user) {
-        req.flash('error', 'Invalid email or password')
-        return res.redirect('/login')
+        return res.status(422).render('authentication/login.pug',
+          {
+            path: '/authentication/login',
+            pageTitle: 'Cafe Login',
+            errorMessage: 'Invalid email or password',
+            errorFields: errorFields, // errorFields can't be an empty array since errors isn't empty
+            oldInput: {
+              email,
+              password
+            }
+          })
       }
       bcrypt.compare(password, user.password)
         .then(isValidPassword => {
@@ -65,8 +75,17 @@ exports.postLogin = (req, res, next) => {
               res.redirect('/')
             })
           } else {
-            req.flash('error', 'Invalid email or password')
-            return res.redirect('/login')
+            return res.status(422).render('authentication/login.pug',
+              {
+                path: '/authentication/login',
+                pageTitle: 'Cafe Login',
+                errorMessage: 'Invalid email or password',
+                errorFields: errorFields, // errorFields can't be an empty array since errors isn't empty
+                oldInput: {
+                  email,
+                  password
+                }
+              })
           }
         })
         .catch(err => {
@@ -96,6 +115,7 @@ exports.getSignup = (req, res, next) => {
 exports.postSignup = (req, res, next) => {
   const { email, password, confirmPassword } = req.body
   const errors = validationResult(req)
+  console.log("HERE", errors)
   const errorFields = errors.array().map(err => err.param)
   if (!errors.isEmpty()) {
     return res.status(422).render('authentication/signup.pug', {
