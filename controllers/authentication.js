@@ -115,7 +115,6 @@ exports.getSignup = (req, res, next) => {
 exports.postSignup = (req, res, next) => {
   const { email, password, confirmPassword } = req.body
   const errors = validationResult(req)
-  console.log("HERE", errors)
   const errorFields = errors.array().map(err => err.param)
   if (!errors.isEmpty()) {
     return res.status(422).render('authentication/signup.pug', {
@@ -229,7 +228,6 @@ exports.getNewPassword = (req, res, next) => {
 
 exports.postNewPassword = (req, res, next) => {
   const { password, userId, passwordToken } = req.body
-  console.log(userId)
   let user
   User.findOne(
     {

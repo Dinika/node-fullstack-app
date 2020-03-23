@@ -3,19 +3,44 @@ block styles
   link(rel="stylesheet" href="/css/admin.css")
 block content
   main
+    if errorMessage
+      .user-message__error #{errorMessage}
+
     form.form-container(action=(editMode ? `/edit-product/${product._id}` : '/add-product') method="POST")
       .form-control
         label(for="name") Product
-        input(type="text" name="name" id="name" value=(editMode ? product.name : ''))
+        input(
+          class=(errorFields.includes('name') ? 'invalid' : undefined)
+          type="text"
+          name="name"
+          id="name"
+          value=(product.name))
       .form-control
         label(for="price") Price
-        input(type="number" name="price" id="price" step="0.01" value=(editMode ? Number(product.price) : ''))
+        input(
+          class=(errorFields.includes('price') ? 'invalid' : undefined)
+          type="number"
+          name="price"
+          id="price"
+          step="0.01"
+          value=(Number(product.price)))
       .form-control
         label(for="imageUrl") Image URL
-        input(type="text" name="imageUrl" id="imageUrl" value=(editMode ? product.imageUrl : ''))
+        input(
+          class=(errorFields.includes('imageUrl') ? 'invalid' : undefined)
+          type="text"
+          name="imageUrl"
+          id="imageUrl"
+          value=(product.imageUrl))
       .form-control
         label(for="description") Description
-        textarea(name="description" cols="35" rows="5" id="description") #{editMode ? product.description : ''}
+        textarea(
+          class=(errorFields.includes('description') ? 'invalid' : undefined)
+          name="description"
+          cols="35"
+          rows="5"
+          id="description") #{product.description}
 
+      input(type='hidden' name='productId' value=(product._id))
       input(type='hidden' name='_csrf' value=csrfToken)
       button(type="submit") #{editMode ? 'Edit' : 'Add'}
