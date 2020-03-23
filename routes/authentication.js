@@ -20,7 +20,14 @@ router.post('/signup',
       }),
     body('password', 'Password should be atleast 6 character long and cannot have special characters')
       .isLength({ min: 6 })
-      .isAlphanumeric()
+      .isAlphanumeric(),
+    body('confirmPassword')
+      .custom((value, { req }) => {
+        if (value !== req.body.password) {
+          throw new Error('Passwords do not match')
+        }
+        return true
+      })
   ],
   authController.postSignup)
 router.get('/reset-password', authController.getResetPassword)
