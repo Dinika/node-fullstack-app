@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const authController = require('../controllers/authentication')
 const { check, body } = require('express-validator/check')
+const User = require('../model/user')
 
 router.get('/login', authController.getLogin)
 router.post('/login', authController.postLogin)
@@ -13,10 +14,12 @@ router.post('/signup',
       .isEmail()
       .withMessage('Invalid e-mail')
       .custom((value, { req }) => {
-        if (value === 'test@test.com') {
-          throw new Error('This email address is forbidden')
-        }
-        return true
+        return User.findOne({ email: value })
+          .then(maybeUser => {
+            if (maybeUser) {
+              return Promise.reject('E-mail address already exists')
+            }
+          })
       }),
     body('password', 'Password should be atleast 6 character long and cannot have special characters')
       .isLength({ min: 6 })

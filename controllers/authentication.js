@@ -72,30 +72,24 @@ exports.postSignup = (req, res, next) => {
       errorMessage: errors.array()[0] ? errors.array()[0].msg : undefined
     })
   }
-  User.findOne({ email: email })
-    .then(maybeUser => {
-      if (maybeUser) {
-        req.flash('error', 'Email already registered')
-        return res.redirect('/login')
-      }
-      return bcrypt.hash(password, 12)
-        .then(encryptedPassword => {
-          const user = new User({
-            email: email,
-            password: encryptedPassword,
-            cart: { items: [] }
-          })
-          return user.save()
-        })
-        .then(result => {
-          res.redirect('/login')
-          return transporter.sendMail({
-            to: email,
-            from: 'cafe@dinika.com',
-            subject: 'Signup successful',
-            html: '<h1>You have successfully registered to our online cafe!</h1>'
-          })
-        })
+
+  bcrypt.hash(password, 12)
+    .then(encryptedPassword => {
+      const user = new User({
+        email: email,
+        password: encryptedPassword,
+        cart: { items: [] }
+      })
+      return user.save()
+    })
+    .then(result => {
+      res.redirect('/login')
+      return transporter.sendMail({
+        to: email,
+        from: 'cafe@dinika.com',
+        subject: 'Signup successful',
+        html: '<h1>You have successfully registered to our online cafe!</h1>'
+      })
     })
     .catch(err => {
       console.log(err)
