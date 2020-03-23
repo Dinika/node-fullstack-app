@@ -4,6 +4,7 @@ const nodeMailer = require('nodemailer')
 const sendGridTransport = require('nodemailer-sendgrid-transport')
 const sendgridApiKey = require('../secrets').sendgridApiKey
 const crypto = require('crypto')
+const { validationResult } = require('express-validator/check')
 
 const transporter = nodeMailer.createTransport(
   sendGridTransport({
@@ -63,7 +64,15 @@ exports.getSignup = (req, res, next) => {
 
 exports.postSignup = (req, res, next) => {
   const { email, password } = req.body
-
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    console.log(errors.array())
+    return res.status(422).render('authentication/signup.pug', {
+      path: '/authentication/signup',
+      pageTitle: 'Cafe Signup',
+      errorMessage: errors.array()
+    })
+  }
   User.findOne({ email: email })
     .then(maybeUser => {
       if (maybeUser) {

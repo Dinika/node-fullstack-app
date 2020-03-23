@@ -9,6 +9,12 @@ A node application that implements an online cafe where users can view and shop 
 - mongoDB
 - mongoose
 - pug - as a templating engine
+- express validator
+- bcryptjs
+- connect-flash
+- csurf
+- express-session
+- nodemailer-sendgrid-transport
 - ~~mysql~~ (Replaced by sequelize since [#d398ef45](https://github.com/Dinika/node-fullstack-app/commit/d398ef45cc4502a51f379afeba8850ba2e916ebe))
 - ~~sequelize~~ (Replaced by mongoDB since [#424a1fe](https://github.com/Dinika/node-fullstack-app/commit/424a1fe4b63fe70081f0ead809555842fa9b1557))
 
