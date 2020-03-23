@@ -66,11 +66,10 @@ exports.postSignup = (req, res, next) => {
   const { email, password } = req.body
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    console.log(errors.array())
     return res.status(422).render('authentication/signup.pug', {
       path: '/authentication/signup',
       pageTitle: 'Cafe Signup',
-      errorMessage: errors.array()
+      errorMessage: errors.array()[0] ? errors.array()[0].msg : undefined
     })
   }
   User.findOne({ email: email })
