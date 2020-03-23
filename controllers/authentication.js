@@ -19,7 +19,11 @@ exports.getLogin = (req, res, next) => {
     {
       path: '/authentication/login',
       pageTitle: 'Cafe Login',
-      errorMessage: req.flash('error') ? req.flash('error')[0] : undefined
+      errorMessage: req.flash('error') ? req.flash('error')[0] : undefined,
+      oldInput: {
+        email: '',
+        password: ''
+      }
     })
 }
 
@@ -27,11 +31,15 @@ exports.postLogin = (req, res, next) => {
   const { email, password } = req.body
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    res.status(422).render('authentication/login.pug',
+    return res.status(422).render('authentication/login.pug',
       {
         path: '/authentication/login',
         pageTitle: 'Cafe Login',
-        errorMessage: errors.array()[0] ? errors.array()[0].msg : undefined
+        errorMessage: errors.array()[0] ? errors.array()[0].msg : undefined,
+        oldInput: {
+          email,
+          password
+        }
       })
   }
   return User.findOne({ email: email })
@@ -68,17 +76,30 @@ exports.postLogin = (req, res, next) => {
 }
 
 exports.getSignup = (req, res, next) => {
-  res.render('authentication/signup.pug', { path: '/authentication/signup', pageTitle: 'Cafe Signup' })
+  res.render('authentication/signup.pug', {
+    path: '/authentication/signup',
+    pageTitle: 'Cafe Signup',
+    oldInput: {
+      email: '',
+      password: '',
+      confirmPassword: ''
+    }
+  })
 }
 
 exports.postSignup = (req, res, next) => {
-  const { email, password } = req.body
+  const { email, password, confirmPassword } = req.body
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(422).render('authentication/signup.pug', {
       path: '/authentication/signup',
       pageTitle: 'Cafe Signup',
-      errorMessage: errors.array()[0] ? errors.array()[0].msg : undefined
+      errorMessage: errors.array()[0] ? errors.array()[0].msg : undefined,
+      oldInput: {
+        email,
+        password,
+        confirmPassword
+      }
     })
   }
 

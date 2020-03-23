@@ -10,10 +10,10 @@ block content
     form.form-container(action="/login" method="POST")
       .form-control
         label(for="email") E-mail
-        input(type="text" name="email" id="email")
+        input(type="text" name="email" id="email" value=(oldInput.email))
       .form-control
         label(for="password") Password
-        input(type="password" name="password" id="password")
+        input(type="password" name="password" id="password" value=(oldInput.password))
       .margin-bottom
         a(href='/reset-password' class='link') Reset password
       input(type='hidden' name='_csrf' value=csrfToken)
