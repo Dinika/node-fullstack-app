@@ -17,4 +17,5 @@ block content
         label(for="description") Description
         textarea(name="description" cols="35" rows="5" id="description") #{editMode ? product.description : ''}
 
+      input(type='hidden' name='_csrf' value=csrfToken)
       button(type="submit") #{editMode ? 'Edit' : 'Add'}

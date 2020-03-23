@@ -42,15 +42,20 @@ exports.postEditProduct = (req, res, next) => {
   }
   Product.findById(productId)
     .then(product => {
+      console.log("Product", product.userId)
+      console.log("User", req.user._id)
+      if (product.userId.toString() !== req.user._id.toString()) {
+        return res.redirect('/')
+      }
       // There must be a smarter way of doing this
       product.name = req.body.name
       product.description = req.body.description
       product.imageUrl = req.body.imageUrl
       product.price = req.body.price
       return product.save()
-    })
-    .then(result => {
-      res.redirect('/admin/products')
+        .then(result => {
+          res.redirect('/admin/products')
+        })
     })
     .catch(err => {
       console.log(err)
@@ -60,7 +65,7 @@ exports.postEditProduct = (req, res, next) => {
 exports.deleteProduct = (req, res, next) => {
   const productId = req.params.productId
   Product
-    .findByIdAndRemove(productId)
+    .deleteOne({ _id: productId, userId: req.user._id })
     .then(() => {
       res.redirect('/admin/products')
     })
