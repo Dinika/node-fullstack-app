@@ -20,6 +20,7 @@ exports.getLogin = (req, res, next) => {
       path: '/authentication/login',
       pageTitle: 'Cafe Login',
       errorMessage: req.flash('error') ? req.flash('error')[0] : undefined,
+      errorFields: [],
       oldInput: {
         email: '',
         password: ''
@@ -30,12 +31,15 @@ exports.getLogin = (req, res, next) => {
 exports.postLogin = (req, res, next) => {
   const { email, password } = req.body
   const errors = validationResult(req)
+  const errorFields = errors.array().map(err => err.param)
+
   if (!errors.isEmpty()) {
     return res.status(422).render('authentication/login.pug',
       {
         path: '/authentication/login',
         pageTitle: 'Cafe Login',
         errorMessage: errors.array()[0] ? errors.array()[0].msg : undefined,
+        errorFields: errorFields, // errorFields can't be an empty array since errors isn't empty
         oldInput: {
           email,
           password
@@ -79,6 +83,8 @@ exports.getSignup = (req, res, next) => {
   res.render('authentication/signup.pug', {
     path: '/authentication/signup',
     pageTitle: 'Cafe Signup',
+    validationErrors: [],
+    errorFields: [],
     oldInput: {
       email: '',
       password: '',
@@ -90,11 +96,13 @@ exports.getSignup = (req, res, next) => {
 exports.postSignup = (req, res, next) => {
   const { email, password, confirmPassword } = req.body
   const errors = validationResult(req)
+  const errorFields = errors.array().map(err => err.param)
   if (!errors.isEmpty()) {
     return res.status(422).render('authentication/signup.pug', {
       path: '/authentication/signup',
       pageTitle: 'Cafe Signup',
       errorMessage: errors.array()[0] ? errors.array()[0].msg : undefined,
+      errorFields: errorFields, // errorFields can't be an empty array since errors isn't empty
       oldInput: {
         email,
         password,

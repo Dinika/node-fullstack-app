@@ -10,12 +10,27 @@ block content
     form.form-container(action="/signup" method="POST")
       .form-control
         label(for="email") email
-        input(type="text" name="email" id="email" value=(oldInput.email))
+        input(
+          class=(errorFields.includes('email') ? 'invalid' : undefined)
+          type="text"
+          name="email"
+          id="email" 
+          value=(oldInput.email))
       .form-control
         label(for="password") Password
-        input(type="password" name="password" id="password" value=(oldInput.password))
+        input(
+          class=(errorFields.includes('password') ? 'invalid' : undefined)
+          type="password"
+          name="password" 
+          id="password" 
+          value=(oldInput.password))
       .form-control
         label(for="confirmPassword") Confirm Password
-        input(type="password" name="confirmPassword" id="confirmPassword" value=(oldInput.confirmPassword))
+        input(
+          class=(errorFields.includes('confirmPassword') ? 'invalid' : undefined)
+          type="password"
+          name="confirmPassword"
+          id="confirmPassword"
+          value=(oldInput.confirmPassword))
       input(type='hidden' name='_csrf' value=csrfToken)
       button(type="submit") Sign Up
