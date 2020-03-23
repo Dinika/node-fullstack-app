@@ -25,6 +25,15 @@ exports.getLogin = (req, res, next) => {
 
 exports.postLogin = (req, res, next) => {
   const { email, password } = req.body
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    res.status(422).render('authentication/login.pug',
+      {
+        path: '/authentication/login',
+        pageTitle: 'Cafe Login',
+        errorMessage: errors.array()[0] ? errors.array()[0].msg : undefined
+      })
+  }
   return User.findOne({ email: email })
     .then(user => {
       if (!user) {

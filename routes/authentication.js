@@ -5,9 +5,19 @@ const { check, body } = require('express-validator/check')
 const User = require('../model/user')
 
 router.get('/login', authController.getLogin)
-router.post('/login', authController.postLogin)
+router.post('/login',
+  [
+    check('email')
+      .isEmail()
+      .withMessage('Invalid e-mail'),
+    check('password')
+      .isLength({ min: 6 })
+      .withMessage('Password should be atleast 6 characters long')
+  ],
+  authController.postLogin)
 router.post('/logout', authController.postLogout)
 router.get('/signup', authController.getSignup)
+
 router.post('/signup',
   [
     check('email')
@@ -21,7 +31,7 @@ router.post('/signup',
             }
           })
       }),
-    body('password', 'Password should be atleast 6 character long and cannot have special characters')
+    body('password', 'Password should be atleast 6 characters long')
       .isLength({ min: 6 })
       .isAlphanumeric(),
     body('confirmPassword')
