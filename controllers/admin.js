@@ -42,8 +42,6 @@ exports.postEditProduct = (req, res, next) => {
   }
   Product.findById(productId)
     .then(product => {
-      console.log("Product", product.userId)
-      console.log("User", req.user._id)
       if (product.userId.toString() !== req.user._id.toString()) {
         return res.redirect('/')
       }
