@@ -6,7 +6,7 @@ const cafeRoutes = require('./routes/cafe')
 const authRoutes = require('./routes/authentication')
 const rootDir = require('./utilities/rootDir')
 const path = require('path')
-const page404Controller = require('./controllers/error')
+const errorController = require('./controllers/error')
 const mongoose = require('mongoose')
 const connectionUri = require('./secrets').mongoConnectionUri
 const sessionSecret = require('./secrets').sessionSecret
@@ -40,11 +40,15 @@ app.use((req, res, next) => {
   } else {
     User.findById(req.session.user._id)
       .then(user => {
-        req.user = user
+        if (user) {
+          req.user = user
+        } else {
+          console.warn("User stored in the session was not found in the database")
+        }
         next()
       })
       .catch(err => {
-        console.log(err)
+        throw new Error(err)
       })
   }
 })
@@ -58,7 +62,8 @@ app.use((req, res, next) => {
 app.use(admin.router)
 app.use(cafeRoutes)
 app.use(authRoutes)
-app.use('/', page404Controller.get404)
+app.get('/500', errorController.get500)
+app.use('/', errorController.get404)
 
 mongoose.connect(connectionUri)
   .then(() => {

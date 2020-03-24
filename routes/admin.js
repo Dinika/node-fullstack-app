@@ -13,6 +13,7 @@ router.post('/add-product',
   [
     body('name', 'Name should be atleast 2 characters long')
       .trim()
+      .isString()
       .isLength({ min: 2 }),
     body('imageUrl')
       .isURL()
@@ -33,6 +34,7 @@ router.post('/edit-product/:productId',
   [
     body('name', 'Name should be atleast 2 characters long')
       .trim()
+      .isString()
       .isLength({ min: 2 }),
     body('imageUrl')
       .isURL()

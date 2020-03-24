@@ -1,5 +1,5 @@
 const Product = require('../model/product')
-const mongodb = require('mongodb')
+const mongoose = require('mongoose')
 const { validationResult } = require('express-validator/check')
 
 exports.getAddProduct = (req, res, next) => {
@@ -44,6 +44,7 @@ exports.postAddProduct = (req, res, next) => {
       res.redirect('/admin/products')
     })
     .catch(err => {
+      res.redirect('/500')
       console.log(err)
     })
 }
@@ -81,7 +82,7 @@ exports.postEditProduct = (req, res, next) => {
     _id: productId
   }
   if (!errors.isEmpty()) {
-    return res.render('admin/edit-product',
+    return res.status(422).render('admin/edit-product',
       {
         path: '',
         pageTitle: 'Edit product',
