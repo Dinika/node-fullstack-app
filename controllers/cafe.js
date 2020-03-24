@@ -1,5 +1,6 @@
 const Product = require('../model/product')
 const Order = require('../model/order')
+const throwError = require('../utilities/throwError')
 
 exports.getProducts = (req, res, next) => {
   Product
@@ -13,7 +14,7 @@ exports.getProducts = (req, res, next) => {
         })
     })
     .catch(err => {
-      console.log(err)
+      throwError(err, next)
     })
 }
 
@@ -25,7 +26,7 @@ exports.getProduct = (req, res, next) => {
       res.render('cafe/product-detail.pug', { product: product, path: '/products' })
     })
     .catch(err => {
-      console.log(err)
+      throwError(err, next)
     })
 }
 
@@ -41,7 +42,7 @@ exports.getCart = (req, res, next) => {
         res.render('cafe/cart.pug', { path: '/cart', pageTitle: 'Cart', productsInCart: productsInCart, totalPrice: 0 })
       })
       .catch(err => {
-        console.log(err)
+        throwError(err, next)
       })
   }
 }
@@ -56,7 +57,7 @@ exports.postCart = (req, res, next) => {
       res.redirect('/cart')
     })
     .catch(err => {
-      console.log(err)
+      throwError(err, next)
     })
 }
 
@@ -66,7 +67,7 @@ exports.getOrders = (req, res, next) => {
       res.render('cafe/orders.pug', { path: '/orders', pageTitle: 'Orders', orders: orders })
     })
     .catch(err => {
-      console.log(err)
+      throwError(err, next)
     })
 }
 
@@ -77,7 +78,7 @@ exports.deleteCartProduct = (req, res, next) => {
       res.redirect('/cart')
     })
     .catch(err => {
-      console.log(err)
+      throwError(err, next)
     })
 }
 
@@ -105,6 +106,6 @@ exports.checkout = (req, res, next) => {
       res.redirect('./orders')
     })
     .catch(err => {
-      console.log(err)
+      throwError(err, next)
     })
 }

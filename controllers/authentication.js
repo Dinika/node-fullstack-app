@@ -5,6 +5,7 @@ const sendGridTransport = require('nodemailer-sendgrid-transport')
 const sendgridApiKey = require('../secrets').sendgridApiKey
 const crypto = require('crypto')
 const { validationResult } = require('express-validator/check')
+const throwError = require('../utilities/throwError')
 
 const transporter = nodeMailer.createTransport(
   sendGridTransport({
@@ -94,7 +95,7 @@ exports.postLogin = (req, res, next) => {
         })
     })
     .catch(err => {
-      console.log(err)
+      throwError(err, next)
     })
 }
 
@@ -149,7 +150,7 @@ exports.postSignup = (req, res, next) => {
       })
     })
     .catch(err => {
-      console.log(err)
+      throwError(err, next)
     })
 }
 
@@ -200,7 +201,7 @@ exports.postResetPassword = (req, res, next) => {
         })
       })
       .catch(err => {
-        console.log(err)
+        throwError(err, next)
       })
   })
 }
@@ -222,7 +223,7 @@ exports.getNewPassword = (req, res, next) => {
         })
     })
     .catch(err => {
-      console.log(err)
+      throwError(err, next)
     })
 }
 
@@ -253,6 +254,6 @@ exports.postNewPassword = (req, res, next) => {
       res.redirect('/login')
     })
     .catch(err => {
-      console.log(err)
+      throwError(err, next)
     })
 }

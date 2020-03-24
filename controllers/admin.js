@@ -1,6 +1,6 @@
 const Product = require('../model/product')
-const mongoose = require('mongoose')
 const { validationResult } = require('express-validator/check')
+const throwError = require('../utilities/throwError')
 
 exports.getAddProduct = (req, res, next) => {
   if (!req.session.isLoggedIn) {
@@ -45,9 +45,7 @@ exports.postAddProduct = (req, res, next) => {
       res.redirect('/admin/products')
     })
     .catch(err => {
-      const error = new Error(err)
-      error.httpStatusCode = 500
-      next(error)
+      throwError(err, next)
     })
 }
 
@@ -142,10 +140,4 @@ exports.getAdminProducts = (req, res, next) => {
     .catch(err => {
       throwError(err, next)
     })
-}
-
-const throwError = (err, next, errorStatusCode = 500) => {
-  const error = new Error(err)
-  error.httpStatusCode = errorStatusCode
-  next(error)
 }
