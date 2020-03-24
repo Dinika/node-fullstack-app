@@ -62,8 +62,8 @@ app.use((req, res, next) => {
 app.use(admin.router)
 app.use(cafeRoutes)
 app.use(authRoutes)
-app.get('/500', errorController.get500)
 app.use('/', errorController.get404)
+app.use(errorController.get500)
 
 mongoose.connect(connectionUri)
   .then(() => {

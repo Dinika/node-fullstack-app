@@ -19,6 +19,7 @@ exports.postAddProduct = (req, res, next) => {
   const { name, price, imageUrl, description } = req.body
   const errors = validationResult(req)
   const errorFields = errors.array().map(err => err.param)
+
   const productToBeFixed = {
     name: req.body.name,
     description: req.body.description,
@@ -44,8 +45,9 @@ exports.postAddProduct = (req, res, next) => {
       res.redirect('/admin/products')
     })
     .catch(err => {
-      res.redirect('/500')
-      console.log(err)
+      const error = new Error(err)
+      error.httpStatusCode = 500
+      next(error)
     })
 }
 
@@ -66,7 +68,7 @@ exports.getEditProduct = (req, res, next) => {
         })
     })
     .catch(err => {
-      console.log(err)
+      throwError(err, next)
     })
 }
 
@@ -111,7 +113,7 @@ exports.postEditProduct = (req, res, next) => {
         })
     })
     .catch(err => {
-      console.log(err)
+      throwError(err, next)
     })
 }
 
@@ -123,7 +125,7 @@ exports.deleteProduct = (req, res, next) => {
       res.redirect('/admin/products')
     })
     .catch(err => {
-      console.log(err)
+      throwError(err, next)
     })
 }
 
@@ -138,6 +140,12 @@ exports.getAdminProducts = (req, res, next) => {
         })
     })
     .catch(err => {
-      console.log(err)
+      throwError(err, next)
     })
+}
+
+const throwError = (err, next, errorStatusCode = 500) => {
+  const error = new Error(err)
+  error.httpStatusCode = errorStatusCode
+  next(error)
 }
