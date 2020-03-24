@@ -3,7 +3,6 @@ exports.get404 = (req, res, next) => {
 }
 
 exports.get500 = (error, req, res, next) => {
-  console.log("HEY HEY")
-  console.log(error)
-  res.status(error.httpStatusCode).render('errors/500.pug', { pageTitle: 'Cafe - 500' })
+  const statusCode = error.httpStatusCode || 500
+  res.status(statusCode).render('errors/500.pug', { pageTitle: 'Cafe - 500' })
 }
