@@ -15,4 +15,5 @@ router.post('/delete-cart-product', isAuthenticated, cafeController.deleteCartPr
 router.get('/orders', isAuthenticated, cafeController.getOrders)
 router.get('/product/:productId', isAuthenticated, cafeController.getProduct)
 router.post('/checkout', isAuthenticated, cafeController.checkout)
+router.get('/invoice/:orderId', cafeController.getInvoice)
 module.exports = router

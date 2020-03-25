@@ -1,6 +1,9 @@
 const Product = require('../model/product')
 const Order = require('../model/order')
 const throwError = require('../utilities/throwError')
+const fs = require('fs')
+const path = require('path')
+const rootDir = require('../utilities/rootDir')
 
 exports.getProducts = (req, res, next) => {
   Product
@@ -108,4 +111,16 @@ exports.checkout = (req, res, next) => {
     .catch(err => {
       throwError(err, next)
     })
+}
+
+exports.getInvoice = (req, res, next) => {
+  const fileName = `${req.params.orderId}.pdf`
+  const pathToFile = path.join(rootDir, 'data', 'invoices', fileName)
+  fs.readFile(pathToFile, (err, data) => {
+    if (err) {
+      next(err)
+    } else {
+      res.send(data)
+    }
+  })
 }
