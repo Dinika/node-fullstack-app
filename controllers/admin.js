@@ -35,7 +35,7 @@ exports.postAddProduct = (req, res, next) => {
       })
     return
   }
-  const imageUrl = image.path
+  const imageUrl = `/${image.path}`
   incomingProduct.imageUrl = imageUrl
   const errors = validationResult(req)
   const errorFields = errors.array().map(err => err.param)
@@ -121,7 +121,7 @@ exports.postEditProduct = (req, res, next) => {
       product.name = req.body.name
       product.description = req.body.description
       if (image) {
-        product.imageUrl = image.path
+        product.imageUrl = `/${image.path}`
       }
       product.price = req.body.price
 
