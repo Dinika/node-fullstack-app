@@ -4,6 +4,7 @@ const throwError = require('../utilities/throwError')
 const fs = require('fs')
 const path = require('path')
 const rootDir = require('../utilities/rootDir')
+const PDFDocument = require('pdfkit')
 
 exports.getProducts = (req, res, next) => {
   Product
@@ -125,13 +126,26 @@ exports.getInvoice = (req, res, next) => {
         return throwError("User not authorized to view this invoice", next, 401)
       }
       const pathToFile = path.join('data', 'invoices', fileName)
-      const file = fs.createReadStream(pathToFile)
+      const pdfDoc = new PDFDocument()
       res.setHeader('Content-Type', 'application/pdf')
       res.setHeader('Content-Disposition', `attachment; filename=${fileName}`)
-      file.pipe(res)
+      pdfDoc.pipe(fs.createWriteStream(pathToFile))
+      pdfDoc.pipe(res)
+      pdfDoc.fontSize(26).text('Invoice', {
+        underline: true
+      })
+      pdfDoc.text('--------------------')
+      let totalPrice = 0
+      order.products.forEach(p => {
+        totalPrice = totalPrice + p.product.price
+        pdfDoc.fontSize(16).text(p.product.name + '-' + p.quantity + 'x $' + p.product.price)
+      })
+      pdfDoc.text('--------------------')
+      pdfDoc.text('Total: $' + totalPrice)
+      pdfDoc.end()
     })
     .catch(err => {
-      throwError("No order found", next, 400)
+      throwError("Error when reading file", next, 400)
     })
 
 }
