@@ -25,13 +25,11 @@ block content
           step="0.01"
           value=(Number(product.price)))
       .form-control
-        label(for="imageUrl") Image URL
+        label(for="image") Image
         input(
-          class=(errorFields.includes('imageUrl') ? 'invalid' : undefined)
-          type="text"
-          name="imageUrl"
-          id="imageUrl"
-          value=(product.imageUrl))
+          type="file"
+          name="image"
+          id="image")
       .form-control
         label(for="description") Description
         textarea(
