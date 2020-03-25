@@ -124,16 +124,11 @@ exports.getInvoice = (req, res, next) => {
       if (order.user.userId.toString() !== req.user._id.toString()) {
         return throwError("User not authorized to view this invoice", next, 401)
       }
-      const pathToFile = path.join(rootDir, 'data', 'invoices', fileName)
-      fs.readFile(pathToFile, (err, data) => {
-        if (err) {
-          next(err)
-        } else {
-          res.setHeader('Content-Type', 'application/pdf')
-          res.setHeader('Content-Disposition', `attachment; filename=${fileName}`)
-          res.send(data)
-        }
-      })
+      const pathToFile = path.join('data', 'invoices', fileName)
+      const file = fs.createReadStream(pathToFile)
+      res.setHeader('Content-Type', 'application/pdf')
+      res.setHeader('Content-Disposition', `attachment; filename=${fileName}`)
+      file.pipe(res)
     })
     .catch(err => {
       throwError("No order found", next, 400)
