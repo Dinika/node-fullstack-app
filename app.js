@@ -14,6 +14,7 @@ const session = require('express-session')
 const MongoDbStore = require('connect-mongodb-session')(session)
 const csurf = require('csurf')
 const flash = require('connect-flash')
+const multer = require('multer')
 
 const app = express()
 const store = new MongoDbStore({
@@ -27,6 +28,7 @@ app.set('views', 'views')
 
 app.use(express.static(path.join(rootDir, 'public')))
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(multer({ dest: 'images' }).single('image'))
 
 app.use(
   session({ secret: sessionSecret, resave: false, saveUninitialized: false, store: store })
