@@ -15,38 +15,52 @@ exports.getAddProduct = (req, res, next) => {
   })
 }
 
+// TODO: Refactor
 exports.postAddProduct = (req, res, next) => {
-  const { name, price, description } = req.body
-  const imageUrl = req.file
-  console.log(imageUrl)
-  const errors = validationResult(req)
-  const errorFields = errors.array().map(err => err.param)
-
-  const productToBeFixed = {
+  const incomingProduct = {
     name: req.body.name,
     description: req.body.description,
     price: req.body.price,
-    imageUrl: req.body.imageUrl
   }
+  const image = req.file
+  if (!image) {
+    res.status(422).render('admin/edit-product',
+      {
+        path: '/admin/add-product',
+        pageTitle: 'Add product',
+        product: incomingProduct,
+        editMode: false,
+        errorMessage: 'Please upload an image with .png, .jpg, .jpeg formats',
+        errorFields: []
+      })
+    return
+  }
+  const imageUrl = image.path
+  incomingProduct.imageUrl = imageUrl
+  const errors = validationResult(req)
+  const errorFields = errors.array().map(err => err.param)
+
+
   if (!errors.isEmpty()) {
     return res.status(422).render('admin/edit-product',
       {
-        path: '',
+        path: '/admin/add-product',
         pageTitle: 'Add product',
-        product: productToBeFixed,
+        product: incomingProduct,
         editMode: false,
         errorMessage: errors.array()[0].msg,
         errorFields: errorFields
       })
   }
-
-  const product = new Product({ name, price, imageUrl, description, userId: req.user })
+  const product = new Product({ ...incomingProduct, userId: req.user })
   product
     .save()
     .then(result => {
+      console.log("Success", result)
       res.redirect('/admin/products')
     })
     .catch(err => {
+      console.log("Error", err)
       throwError(err, next)
     })
 }
@@ -76,11 +90,11 @@ exports.postEditProduct = (req, res, next) => {
   const productId = req.params.productId
   const errors = validationResult(req)
   const errorFields = errors.array().map(err => err.param)
-  const productToBeFixed = {
+  const image = req.file
+  const updatedProduct = {
     name: req.body.name,
     description: req.body.description,
     price: req.body.price,
-    imageUrl: req.body.imageUrl,
     _id: productId
   }
   if (!errors.isEmpty()) {
@@ -88,7 +102,7 @@ exports.postEditProduct = (req, res, next) => {
       {
         path: '',
         pageTitle: 'Edit product',
-        product: productToBeFixed,
+        product: updatedProduct,
         editMode: true,
         errorMessage: errors.array()[0].msg,
         errorFields: errorFields
@@ -100,13 +114,17 @@ exports.postEditProduct = (req, res, next) => {
   Product.findById(productId)
     .then(product => {
       if (product.userId.toString() !== req.user._id.toString()) {
+        // Todo: Add unauthorized status to response and indicate to user
         return res.redirect('/')
       }
       // There must be a smarter way of doing this
       product.name = req.body.name
       product.description = req.body.description
-      product.imageUrl = req.body.imageUrl
+      if (image) {
+        product.imageUrl = image.path
+      }
       product.price = req.body.price
+
       return product.save()
         .then(result => {
           res.redirect('/admin/products')

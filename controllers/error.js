@@ -4,5 +4,6 @@ exports.get404 = (req, res, next) => {
 
 exports.get500 = (error, req, res, next) => {
   const statusCode = error.httpStatusCode || 500
+  console.warn(error)
   res.status(statusCode).render('errors/500.pug', { pageTitle: 'Cafe - 500' })
 }
