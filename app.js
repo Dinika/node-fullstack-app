@@ -23,12 +23,22 @@ const store = new MongoDbStore({
 })
 const csrfProtection = csurf()
 
+const fileStorage = multer.diskStorage({
+  destination: (req, res, cb) => {
+    cb(null, 'images')
+  },
+  filename: (req, file, cb) => {
+    // The name can be tweaked to use some random string instead of current date
+    cb(null, `${new Date().toISOString()}-${file.originalname}`)
+  }
+})
+
 app.set('view engine', 'pug')
 app.set('views', 'views')
 
 app.use(express.static(path.join(rootDir, 'public')))
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(multer({ dest: 'images' }).single('image'))
+app.use(multer({ storage: fileStorage }).single('image'))
 
 app.use(
   session({ secret: sessionSecret, resave: false, saveUninitialized: false, store: store })
