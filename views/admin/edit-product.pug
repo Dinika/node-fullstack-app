@@ -6,7 +6,7 @@ block content
     if errorMessage
       .user-message__error #{errorMessage}
 
-    form.form-container(action=(editMode ? `/edit-product/${product._id}` : '/add-product') method="POST")
+    form.form-container(action=(editMode ? `/edit-product/${product._id}` : '/add-product') method="POST" enctype="multipart/form-data")
       .form-control
         label(for="name") Product
         input(

@@ -15,10 +15,6 @@ router.post('/add-product',
       .trim()
       .isString()
       .isLength({ min: 2 }),
-    body('imageUrl')
-      .isURL()
-      .trim()
-      .withMessage('image url should be a valid url'),
     body('price')
       .isFloat()
       .withMessage('Price should be a numeric value (eg: 4.25)'),
