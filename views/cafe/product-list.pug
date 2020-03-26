@@ -20,9 +20,7 @@ block content
               a.btn(href=`/product/${product._id}`) Details
               if isLoggedIn
                 include ../layouts/add-to-cart.pug
-      section.pagination
-        each page in pageNumbers
-          a(href=`?page=${page}` class=(currentPage == page ? 'active' : undefined)) #{page}
+      include ../layouts/pagination.pug  
 
     else
       h1 Sorry, we have no products available at the moment

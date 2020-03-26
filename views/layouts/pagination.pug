@@ -1,0 +1,3 @@
+section.pagination
+  each page in pageNumbers
+    a(href=`?page=${page}` class=(currentPage == page ? 'active' : undefined)) #{page}
