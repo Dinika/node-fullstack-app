@@ -145,10 +145,16 @@ exports.deleteProduct = (req, res, next) => {
       return Product.deleteOne({ _id: productId, userId: req.user._id })
     })
     .then(() => {
-      res.redirect('/admin/products')
+      res
+        .status(200)
+        .json({
+          message: 'Success'
+        })
     })
     .catch(err => {
-      throwError(err, next)
+      res.status(200).json({
+        message: `Deletion of product ${productId} failed`
+      })
     })
 }
 

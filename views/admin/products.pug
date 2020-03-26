@@ -18,10 +18,10 @@ block content
               p.product__description #{product.description}
             .card__actions  
               a.btn(href=`/admin/edit-product/${product._id}`) Edit
-              form(action=`/admin/delete-product/${product._id}` method="POST")
-                input(type='hidden' name='_csrf' value=csrfToken)
-                button.btn Delete
-      include ../layouts/pagination.pug  
+              input(type='hidden' name='productId' value=product._id)
+              input(type='hidden' name='_csrf' value=csrfToken)
+              button.btn(type="button" onclick="deleteProduct(this)") Delete
 
     else
       h1 Sorry, we have no products available at the moment
+  script(src="/js/admin.js")
