@@ -1,6 +1,7 @@
 const Product = require('../model/product')
 const { validationResult } = require('express-validator/check')
 const throwError = require('../utilities/throwError')
+const fileHelper = require('../utilities/file')
 
 exports.getAddProduct = (req, res, next) => {
   if (!req.session.isLoggedIn) {
@@ -121,6 +122,8 @@ exports.postEditProduct = (req, res, next) => {
       product.name = req.body.name
       product.description = req.body.description
       if (image) {
+        const oldImageUrl = product.imageUrl
+        fileHelper.deleteFile(oldImageUrl)
         product.imageUrl = `/${image.path}`
       }
       product.price = req.body.price
@@ -137,8 +140,11 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.deleteProduct = (req, res, next) => {
   const productId = req.params.productId
-  Product
-    .deleteOne({ _id: productId, userId: req.user._id })
+  Product.findById(productId)
+    .then(product => {
+      fileHelper.deleteFile(product.imageUrl)
+      return Product.deleteOne({ _id: productId, userId: req.user._id })
+    })
     .then(() => {
       res.redirect('/admin/products')
     })

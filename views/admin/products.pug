@@ -21,6 +21,9 @@ block content
               form(action=`/admin/delete-product/${product._id}` method="POST")
                 input(type='hidden' name='_csrf' value=csrfToken)
                 button.btn Delete
+      section.pagination
+        a(href="/?page=1") 1
+        a(href="/?page=2") 2
 
     else
       h1 Sorry, we have no products available at the moment
