@@ -10,16 +10,29 @@ const ITEMS_PER_PAGE = 2
 
 exports.getProducts = (req, res, next) => {
   const page = req.query.page
-  Product
-    .find()
-    .skip((page - 1) * ITEMS_PER_PAGE)
-    .limit(ITEMS_PER_PAGE)
+  let totalProducts
+  Product.find()
+    .count()
+    .then((numProducts) => {
+      totalProducts = numProducts
+      return Product
+        .find()
+        .skip((page - 1) * ITEMS_PER_PAGE)
+        .limit(ITEMS_PER_PAGE)
+
+    })
     .then(products => {
       res.render('cafe/product-list.pug',
         {
           products: products,
           path: '/',
-          pageTitle: 'Cafe'
+          pageTitle: 'Cafe',
+          totalProducts: totalProducts,
+          hasNextPage: ITEMS_PER_PAGE * page < totalProducts,
+          hasPreviousPage: page > 1,
+          nextPage: page + 1,
+          previousPage: page - 1,
+          lastPage: Math.ceil(totalProducts / ITEMS_PER_PAGE)
         })
     })
     .catch(err => {
