@@ -1,0 +1,480 @@
+
+{
+  "header": {
+    "event": "Allocation failed - JavaScript heap out of memory",
+    "trigger": "FatalError",
+    "filename": "report.20200326.134524.23451.0.001.json",
+    "dumpEventTime": "2020-03-26T13:45:24Z",
+    "dumpEventTimeStamp": "1585226724613",
+    "processId": 23451,
+    "cwd": "/home/dinika/src/node-fullstack-app",
+    "commandLine": [
+      "/usr/bin/node",
+      "app.js"
+    ],
+    "nodejsVersion": "v11.15.0",
+    "glibcVersionRuntime": "2.29",
+    "glibcVersionCompiler": "2.12",
+    "wordSize": 64,
+    "arch": "x64",
+    "platform": "linux",
+    "componentVersions": {
+      "node": "11.15.0",
+      "v8": "7.0.276.38-node.19",
+      "uv": "1.27.0",
+      "zlib": "1.2.11",
+      "brotli": "1.0.7",
+      "ares": "1.15.0",
+      "modules": "67",
+      "nghttp2": "1.37.0",
+      "napi": "4",
+      "llhttp": "1.1.1",
+      "http_parser": "2.8.0",
+      "openssl": "1.1.1b",
+      "cldr": "34.0",
+      "icu": "63.1",
+      "tz": "2018e",
+      "unicode": "11.0"
+    },
+    "release": {
+      "name": "node",
+      "headersUrl": "https://nodejs.org/download/release/v11.15.0/node-v11.15.0-headers.tar.gz",
+      "sourceUrl": "https://nodejs.org/download/release/v11.15.0/node-v11.15.0.tar.gz"
+    },
+    "osName": "Linux",
+    "osRelease": "5.5.8-100.fc30.x86_64",
+    "osVersion": "#1 SMP Thu Mar 5 21:55:51 UTC 2020",
+    "osMachine": "x86_64",
+    "host": "localhost.localdomain"
+  },
+  "javascriptStack": {
+    "message": "No stack.",
+    "stack": [
+      "Unavailable."
+    ]
+  },
+  "nativeStack": [
+    {
+      "pc": "0x0000000000a702fd",
+      "symbol": "report::TriggerNodeReport(v8::Isolate*, node::Environment*, char const*, char const*, std::string const&, v8::Local<v8::String>) [/usr/bin/node]"
+    },
+    {
+      "pc": "0x000000000095ccb3",
+      "symbol": "node::OnFatalError(char const*, char const*) [/usr/bin/node]"
+    },
+    {
+      "pc": "0x0000000000b3dbde",
+      "symbol": "v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, bool) [/usr/bin/node]"
+    },
+    {
+      "pc": "0x0000000000b3de14",
+      "symbol": "v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, bool) [/usr/bin/node]"
+    },
+    {
+      "pc": "0x0000000000f3ce52",
+      "symbol": " [/usr/bin/node]"
+    },
+    {
+      "pc": "0x0000000000f3cf58",
+      "symbol": "v8::internal::Heap::CheckIneffectiveMarkCompact(unsigned long, double) [/usr/bin/node]"
+    },
+    {
+      "pc": "0x0000000000f49678",
+      "symbol": "v8::internal::Heap::PerformGarbageCollection(v8::internal::GarbageCollector, v8::GCCallbackFlags) [/usr/bin/node]"
+    },
+    {
+      "pc": "0x0000000000f4a18b",
+      "symbol": "v8::internal::Heap::CollectGarbage(v8::internal::AllocationSpace, v8::internal::GarbageCollectionReason, v8::GCCallbackFlags) [/usr/bin/node]"
+    },
+    {
+      "pc": "0x0000000000f4cec1",
+      "symbol": "v8::internal::Heap::AllocateRawWithRetryOrFail(int, v8::internal::AllocationSpace, v8::internal::AllocationAlignment) [/usr/bin/node]"
+    },
+    {
+      "pc": "0x0000000000f170f4",
+      "symbol": "v8::internal::Factory::NewFillerObject(int, bool, v8::internal::AllocationSpace) [/usr/bin/node]"
+    },
+    {
+      "pc": "0x00000000011cd3fe",
+      "symbol": "v8::internal::Runtime_AllocateInNewSpace(int, v8::internal::Object**, v8::internal::Isolate*) [/usr/bin/node]"
+    },
+    {
+      "pc": "0x00001efa4dc4fc5d",
+      "symbol": ""
+    }
+  ],
+  "javascriptHeap": {
+    "totalMemory": 1517346816,
+    "totalCommittedMemory": 1511706568,
+    "usedMemory": 1475636248,
+    "availableMemory": 15637080,
+    "memoryLimit": 1526909922,
+    "heapSpaces": {
+      "read_only_space": {
+        "memorySize": 524288,
+        "committedMemory": 42224,
+        "capacity": 515584,
+        "used": 33520,
+        "available": 482064
+      },
+      "new_space": {
+        "memorySize": 15728640,
+        "committedMemory": 11544520,
+        "capacity": 7733760,
+        "used": 3886632,
+        "available": 3847128
+      },
+      "old_space": {
+        "memorySize": 1490227200,
+        "committedMemory": 1489709760,
+        "capacity": 1465407744,
+        "used": 1463470992,
+        "available": 1936752
+      },
+      "code_space": {
+        "memorySize": 1572864,
+        "committedMemory": 1150880,
+        "capacity": 1016064,
+        "used": 1016064,
+        "available": 0
+      },
+      "map_space": {
+        "memorySize": 2109440,
+        "committedMemory": 2074800,
+        "capacity": 1437120,
+        "used": 1437120,
+        "available": 0
+      },
+      "large_object_space": {
+        "memorySize": 7184384,
+        "committedMemory": 7184384,
+        "capacity": 15163056,
+        "used": 5791920,
+        "available": 9371136
+      },
+      "new_large_object_space": {
+        "memorySize": 0,
+        "committedMemory": 0,
+        "capacity": 0,
+        "used": 0,
+        "available": 0
+      }
+    }
+  },
+  "resourceUsage": {
+    "userCpuSeconds": 18.3946,
+    "kernelCpuSeconds": 0.620364,
+    "cpuConsumptionPercent": 100.079,
+    "maxRss": 1553469440,
+    "pageFaults": {
+      "IORequired": 17,
+      "IONotRequired": 431028
+    },
+    "fsActivity": {
+      "reads": 2312,
+      "writes": 0
+    }
+  },
+  "uvthreadResourceUsage": {
+    "userCpuSeconds": 10.0256,
+    "kernelCpuSeconds": 0.424169,
+    "cpuConsumptionPercent": 54.9989,
+    "fsActivity": {
+      "reads": 2312,
+      "writes": 0
+    }
+  },
+  "libuv": [
+  ],
+  "environmentVariables": {
+    "SHELL": "/bin/bash",
+    "npm_config_timing": "",
+    "npm_config_access": "",
+    "npm_config_save_dev": "",
+    "SESSION_MANAGER": "local/unix:@/tmp/.ICE-unix/2372,unix/unix:/tmp/.ICE-unix/2372",
+    "npm_config_sign_git_tag": "",
+    "npm_config_userconfig": "/home/dinika/.npmrc",
+    "npm_config_global": "",
+    "npm_config_unsafe_perm": "true",
+    "COLORTERM": "truecolor",
+    "npm_config_fetch_retry_mintimeout": "10000",
+    "npm_config_cache": "/home/dinika/.npm",
+    "npm_config_loglevel": "notice",
+    "npm_config_init_author_name": "",
+    "npm_package_main": "app.js",
+    "npm_config_send_metrics": "",
+    "npm_package_dependencies_pug": "^2.0.4",
+    "HISTCONTROL": "ignoredups",
+    "XDG_MENU_PREFIX": "gnome-",
+    "npm_package_repository_url": "git+https://github.com/Dinika/node-practice.git",
+    "TERM_PROGRAM_VERSION": "1.43.0",
+    "npm_config_optional": "true",
+    "npm_config_user": "",
+    "npm_config_git_tag_version": "true",
+    "APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL": "true",
+    "npm_package_dependencies_mongodb": "^3.5.5",
+    "npm_config_rebuild_bundle": "true",
+    "HOSTNAME": "localhost.localdomain",
+    "HISTSIZE": "1000",
+    "npm_config_always_auth": "",
+    "npm_config_cache_max": "Infinity",
+    "NODE": "/usr/bin/node",
+    "npm_config_searchstaleness": "900",
+    "npm_config_ignore_scripts": "",
+    "npm_config_save_optional": "",
+    "GUESTFISH_OUTPUT": "\\e[0m",
+    "SSH_AUTH_SOCK": "/run/user/1000/keyring/ssh",
+    "npm_config_dev": "",
+    "npm_config_browser": "",
+    "npm_config_maxsockets": "50",
+    "TERMINATOR_UUID": "urn:uuid:4dd42682-8d50-4c68-a00f-d8b17931b50c",
+    "npm_config_argv": "{\"remain\":[],\"cooked\":[\"start\"],\"original\":[\"start\"]}",
+    "npm_config_ham_it_up": "",
+    "XMODIFIERS": "@im=ibus",
+    "npm_config_bin_links": "true",
+    "DESKTOP_SESSION": "gnome",
+    "npm_package_scripts_start_server": "node app.js",
+    "SSH_AGENT_PID": "2389",
+    "NO_AT_BRIDGE": "1",
+    "npm_config_allow_same_version": "",
+    "npm_config_globalconfig": "/usr/etc/npmrc",
+    "npm_config_cache_min": "10",
+    "npm_package_devDependencies_nodemon": "^1.19.2",
+    "npm_config_tag_version_prefix": "v",
+    "npm_config_shell": "/bin/bash",
+    "npm_config_preid": "",
+    "npm_config_usage": "",
+    "XDG_SEAT": "seat0",
+    "ENV": "/usr/share/Modules/init/profile.sh",
+    "PWD": "/home/dinika/src/node-fullstack-app",
+    "npm_config_save_prefix": "^",
+    "npm_config_only": "",
+    "XDG_SESSION_DESKTOP": "gnome",
+    "LOGNAME": "dinika",
+    "XDG_SESSION_TYPE": "x11",
+    "npm_config_sign_git_commit": "",
+    "npm_package_readmeFilename": "README.md",
+    "MODULESHOME": "/usr/share/Modules",
+    "npm_config_commit_hooks": "true",
+    "MANPATH": ":",
+    "npm_config_init_module": "/home/dinika/.npm-init.js",
+    "npm_config_otp": "",
+    "npm_config_editor": "vi",
+    "npm_config_tmp": "/tmp",
+    "npm_config_audit_level": "low",
+    "_": "/home/dinika/src/node-fullstack-app/node_modules/.bin/nodemon",
+    "npm_config_color": "true",
+    "XAUTHORITY": "/run/user/1000/gdm/Xauthority",
+    "npm_package_nodemonConfig_ignore_0": "data",
+    "GUESTFISH_RESTORE": "\\e[0m",
+    "npm_config_package_lock_only": "",
+    "npm_package_dependencies_mongoose": "^5.9.4",
+    "npm_config_save_prod": "",
+    "npm_package_dependencies_connect_mongodb_session": "^2.3.1",
+    "npm_package_bugs_url": "https://github.com/Dinika/node-practice/issues",
+    "GJS_DEBUG_TOPICS": "JS ERROR;JS LOG",
+    "WINDOWPATH": "2",
+    "GDM_LANG": "en_US.UTF-8",
+    "npm_config_also": "",
+    "npm_config_cidr": "",
+    "HOME": "/home/dinika",
+    "npm_config_node_version": "11.15.0",
+    "USERNAME": "dinika",
+    "LANG": "en_US.UTF-8",
+    "npm_package_dependencies_connect_flash": "^0.1.1",
+    "npm_config_init_author_url": "",
+    "LS_COLORS": "rs=0:di=38;5;33:ln=38;5;51:mh=00:pi=40;38;5;11:so=38;5;13:do=38;5;5:bd=48;5;232;38;5;11:cd=48;5;232;38;5;3:or=48;5;232;38;5;9:mi=01;37;41:su=48;5;196;38;5;15:sg=48;5;11;38;5;16:ca=48;5;196;38;5;226:tw=48;5;10;38;5;16:ow=48;5;10;38;5;21:st=48;5;21;38;5;15:ex=38;5;40:*.tar=38;5;9:*.tgz=38;5;9:*.arc=38;5;9:*.arj=38;5;9:*.taz=38;5;9:*.lha=38;5;9:*.lz4=38;5;9:*.lzh=38;5;9:*.lzma=38;5;9:*.tlz=38;5;9:*.txz=38;5;9:*.tzo=38;5;9:*.t7z=38;5;9:*.zip=38;5;9:*.z=38;5;9:*.dz=38;5;9:*.gz=38;5;9:*.lrz=38;5;9:*.lz=38;5;9:*.lzo=38;5;9:*.xz=38;5;9:*.zst=38;5;9:*.tzst=38;5;9:*.bz2=38;5;9:*.bz=38;5;9:*.tbz=38;5;9:*.tbz2=38;5;9:*.tz=38;5;9:*.deb=38;5;9:*.rpm=38;5;9:*.jar=38;5;9:*.war=38;5;9:*.ear=38;5;9:*.sar=38;5;9:*.rar=38;5;9:*.alz=38;5;9:*.ace=38;5;9:*.zoo=38;5;9:*.cpio=38;5;9:*.7z=38;5;9:*.rz=38;5;9:*.cab=38;5;9:*.wim=38;5;9:*.swm=38;5;9:*.dwm=38;5;9:*.esd=38;5;9:*.jpg=38;5;13:*.jpeg=38;5;13:*.mjpg=38;5;13:*.mjpeg=38;5;13:*.gif=38;5;13:*.bmp=38;5;13:*.pbm=38;5;13:*.pgm=38;5;13:*.ppm=38;5;13:*.tga=38;5;13:*.xbm=38;5;13:*.xpm=38;5;13:*.tif=38;5;13:*.tiff=38;5;13:*.png=38;5;13:*.svg=38;5;13:*.svgz=38;5;13:*.mng=38;5;13:*.pcx=38;5;13:*.mov=38;5;13:*.mpg=38;5;13:*.mpeg=38;5;13:*.m2v=38;5;13:*.mkv=38;5;13:*.webm=38;5;13:*.ogm=38;5;13:*.mp4=38;5;13:*.m4v=38;5;13:*.mp4v=38;5;13:*.vob=38;5;13:*.qt=38;5;13:*.nuv=38;5;13:*.wmv=38;5;13:*.asf=38;5;13:*.rm=38;5;13:*.rmvb=38;5;13:*.flc=38;5;13:*.avi=38;5;13:*.fli=38;5;13:*.flv=38;5;13:*.gl=38;5;13:*.dl=38;5;13:*.xcf=38;5;13:*.xwd=38;5;13:*.yuv=38;5;13:*.cgm=38;5;13:*.emf=38;5;13:*.ogv=38;5;13:*.ogx=38;5;13:*.aac=38;5;45:*.au=38;5;45:*.flac=38;5;45:*.m4a=38;5;45:*.mid=38;5;45:*.midi=38;5;45:*.mka=38;5;45:*.mp3=38;5;45:*.mpc=38;5;45:*.ogg=38;5;45:*.ra=38;5;45:*.wav=38;5;45:*.oga=38;5;45:*.opus=38;5;45:*.spx=38;5;45:*.xspf=38;5;45:",
+    "XDG_CURRENT_DESKTOP": "GNOME",
+    "npm_config_globalignorefile": "/usr/etc/npmignore",
+    "npm_config_init_license": "ISC",
+    "npm_package_version": "1.0.0",
+    "npm_config_cache_lock_stale": "60000",
+    "npm_package_dependencies_nodemailer_sendgrid_transport": "^0.2.0",
+    "VTE_VERSION": "5604",
+    "npm_config_versions": "",
+    "npm_config_proxy": "",
+    "npm_config_fetch_retry_maxtimeout": "60000",
+    "npm_config_fetch_retries": "2",
+    "npm_config_git": "git",
+    "npm_config_read_only": "",
+    "npm_config_group": "1000",
+    "npm_package_repository_type": "git",
+    "GUESTFISH_PS1": "\\[\\e[1;32m\\]><fs>\\[\\e[0;31m\\] ",
+    "npm_package_dependencies_express": "^4.17.1",
+    "npm_config_unicode": "true",
+    "npm_config_sso_type": "oauth",
+    "npm_config_cache_lock_retries": "10",
+    "npm_config_local_address": "",
+    "npm_config_description": "true",
+    "INIT_CWD": "/home/dinika/src/node-fullstack-app",
+    "npm_config_dry_run": "",
+    "CHROME_DESKTOP": "code-url-handler.desktop",
+    "npm_config_viewer": "man",
+    "npm_config_offline": "",
+    "npm_config_message": "%s",
+    "npm_config_production": "",
+    "npm_config_prefer_online": "",
+    "npm_config_link": "",
+    "npm_lifecycle_script": "nodemon app.js",
+    "npm_package_description": "A node application that implements an online cafe where users can view and shop available products and administrators of the shop can manage the products available in the cafe.",
+    "npm_config_shrinkwrap": "true",
+    "GJS_DEBUG_OUTPUT": "stderr",
+    "npm_config_force": "",
+    "npm_package_dependencies_pdfkit": "^0.11.0",
+    "npm_package_dependencies_nodemailer": "^6.4.6",
+    "npm_config_rollback": "true",
+    "MODULEPATH_modshare": "/usr/share/modulefiles:1:/usr/share/Modules/modulefiles:1:/etc/modulefiles:1",
+    "XDG_SESSION_CLASS": "user",
+    "npm_config_save_bundle": "",
+    "npm_config_onload_script": "",
+    "TERM": "xterm-256color",
+    "npm_package_dependencies_express_validator": "^6.4.0",
+    "npm_package_name": "route-practice",
+    "npm_config_prefix": "/usr",
+    "npm_config_cert": "",
+    "LESSOPEN": "||/usr/bin/lesspipe.sh %s",
+    "USER": "dinika",
+    "npm_config_heading": "npm",
+    "npm_package_homepage": "https://github.com/Dinika/node-practice#readme",
+    "MODULES_RUN_QUARANTINE": "LD_LIBRARY_PATH",
+    "npm_package_dependencies_multer": "^1.4.2",
+    "LOADEDMODULES": "",
+    "npm_config_cache_lock_wait": "10000",
+    "npm_config_node_options": "",
+    "npm_config_key": "",
+    "npm_config_json": "",
+    "npm_config_depth": "Infinity",
+    "DISPLAY": ":1",
+    "npm_lifecycle_event": "start",
+    "SHLVL": "3",
+    "BASH_ENV": "/usr/share/Modules/init/bash",
+    "npm_config_ca": "",
+    "npm_package_dependencies_csurf": "^1.11.0",
+    "GUESTFISH_INIT": "\\e[1;34m",
+    "npm_config_prefer_offline": "",
+    "QT_IM_MODULE": "ibus",
+    "XDG_VTNR": "2",
+    "npm_config_if_present": "",
+    "XDG_SESSION_ID": "2",
+    "npm_config_user_agent": "npm/6.7.0 node/v11.15.0 linux x64",
+    "npm_package_dependencies_express_session": "^1.17.0",
+    "npm_config_save_exact": "",
+    "npm_execpath": "/usr/lib/node_modules/npm/bin/npm-cli.js",
+    "npm_config_progress": "true",
+    "npm_config_global_style": "",
+    "npm_package_scripts_test": "echo \"Error: no test specified\" && exit 1",
+    "npm_config_init_author_email": "",
+    "XDG_RUNTIME_DIR": "/run/user/1000",
+    "npm_config_script_shell": "",
+    "npm_config_long": "",
+    "npm_config_save": "true",
+    "npm_config_strict_ssl": "true",
+    "npm_config_auth_type": "legacy",
+    "npm_config_version": "",
+    "npm_config_logs_max": "10",
+    "npm_package_dependencies_mysql2": "^2.1.0",
+    "npm_config_umask": "0002",
+    "npm_config_sso_poll_frequency": "500",
+    "npm_config_searchopts": "",
+    "npm_config_legacy_bundling": "",
+    "XDG_DATA_DIRS": "/home/dinika/.local/share/flatpak/exports/share/:/var/lib/flatpak/exports/share/:/usr/local/share/:/usr/share/",
+    "npm_config_searchlimit": "20",
+    "npm_package_scripts_start": "nodemon app.js",
+    "npm_config_noproxy": "",
+    "PATH": "/usr/lib/node_modules/npm/node_modules/npm-lifecycle/node-gyp-bin:/home/dinika/src/node-fullstack-app/node_modules/.bin:/usr/share/Modules/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/home/dinika/.local/bin:/home/dinika/bin:/home/dinika/.cargo/bin:/home/dinika/.local/bin:/home/dinika/bin:/home/dinika/.cargo/bin:/home/dinika/.local/bin:/home/dinika/bin:/home/dinika/.cargo/bin",
+    "npm_config_metrics_registry": "https://registry.npmjs.org/",
+    "npm_config_node_gyp": "/usr/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js",
+    "npm_config_searchexclude": "",
+    "MODULEPATH": "/etc/scl/modulefiles:/etc/scl/modulefiles:/etc/scl/modulefiles:/usr/share/Modules/modulefiles:/etc/modulefiles:/usr/share/modulefiles",
+    "npm_package_dependencies_bcryptjs": "^2.4.3",
+    "GDMSESSION": "gnome",
+    "npm_package_dependencies_body_parser": "^1.19.0",
+    "npm_package_dependencies_sequelize": "^5.21.5",
+    "npm_package_author_name": "Dinika",
+    "DBUS_SESSION_BUS_ADDRESS": "unix:path=/run/user/1000/bus",
+    "npm_package_license": "ISC",
+    "npm_package_gitHead": "528b8add849a88d8fb3339d78732b7ff09695e79",
+    "npm_config_update_notifier": "true",
+    "MAIL": "/var/spool/mail/dinika",
+    "npm_config_registry": "https://registry.npmjs.org/",
+    "npm_config_ignore_prepublish": "",
+    "npm_config_audit": "true",
+    "npm_config_tag": "latest",
+    "npm_config_scripts_prepend_node_path": "warn-only",
+    "npm_config_cafile": "",
+    "npm_config_fetch_retry_factor": "10",
+    "GIO_LAUNCHED_DESKTOP_FILE_PID": "3047",
+    "npm_node_execpath": "/usr/bin/node",
+    "npm_config_engine_strict": "",
+    "GIO_LAUNCHED_DESKTOP_FILE": "/usr/share/applications/terminator.desktop",
+    "npm_config_https_proxy": "",
+    "OLDPWD": "/home/dinika",
+    "npm_config_scope": "",
+    "MODULES_CMD": "/usr/share/Modules/libexec/modulecmd.tcl",
+    "npm_config_package_lock": "true",
+    "TERM_PROGRAM": "vscode",
+    "npm_config_parseable": "",
+    "npm_config_init_version": "1.0.0",
+    "BASH_FUNC_switchml%%": "() {  typeset swfound=1;\n if [ \"${MODULES_USE_COMPAT_VERSION:-0}\" = '1' ]; then\n typeset swname='main';\n if [ -e /usr/share/Modules/libexec/modulecmd.tcl ]; then\n typeset swfound=0;\n unset MODULES_USE_COMPAT_VERSION;\n fi;\n else\n typeset swname='compatibility';\n if [ -e /usr/share/Modules/libexec/modulecmd-compat ]; then\n typeset swfound=0;\n MODULES_USE_COMPAT_VERSION=1;\n export MODULES_USE_COMPAT_VERSION;\n fi;\n fi;\n if [ $swfound -eq 0 ]; then\n echo \"Switching to Modules $swname version\";\n source /usr/share/Modules/init/bash;\n else\n echo \"Cannot switch to Modules $swname version, command not found\";\n return 1;\n fi\n}",
+    "BASH_FUNC_module%%": "() {  _module_raw \"$@\" 2>&1\n}",
+    "BASH_FUNC_scl%%": "() {  if [ \"$1\" = \"load\" -o \"$1\" = \"unload\" ]; then\n eval \"module $@\";\n else\n /usr/bin/scl \"$@\";\n fi\n}",
+    "BASH_FUNC__module_raw%%": "() {  unset _mlshdbg;\n if [ \"${MODULES_SILENT_SHELL_DEBUG:-0}\" = '1' ]; then\n case \"$-\" in \n *v*x*)\n set +vx;\n _mlshdbg='vx'\n ;;\n *v*)\n set +v;\n _mlshdbg='v'\n ;;\n *x*)\n set +x;\n _mlshdbg='x'\n ;;\n *)\n _mlshdbg=''\n ;;\n esac;\n fi;\n unset _mlre _mlIFS;\n if [ -n \"${IFS+x}\" ]; then\n _mlIFS=$IFS;\n fi;\n IFS=' ';\n for _mlv in ${MODULES_RUN_QUARANTINE:-};\n do\n if [ \"${_mlv}\" = \"${_mlv##*[!A-Za-z0-9_]}\" -a \"${_mlv}\" = \"${_mlv#[0-9]}\" ]; then\n if [ -n \"`eval 'echo ${'$_mlv'+x}'`\" ]; then\n _mlre=\"${_mlre:-}${_mlv}_modquar='`eval 'echo ${'$_mlv'}'`' \";\n fi;\n _mlrv=\"MODULES_RUNENV_${_mlv}\";\n _mlre=\"${_mlre:-}${_mlv}='`eval 'echo ${'$_mlrv':-}'`' \";\n fi;\n done;\n if [ -n \"${_mlre:-}\" ]; then\n eval `eval ${_mlre}/usr/bin/tclsh /usr/share/Modules/libexec/modulecmd.tcl bash '\"$@\"'`;\n else\n eval `/usr/bin/tclsh /usr/share/Modules/libexec/modulecmd.tcl bash \"$@\"`;\n fi;\n _mlstatus=$?;\n if [ -n \"${_mlIFS+x}\" ]; then\n IFS=$_mlIFS;\n else\n unset IFS;\n fi;\n unset _mlre _mlv _mlrv _mlIFS;\n if [ -n \"${_mlshdbg:-}\" ]; then\n set -$_mlshdbg;\n fi;\n unset _mlshdbg;\n return $_mlstatus\n}"
+  },
+  "userLimits": {
+    "core_file_size_blocks": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "data_seg_size_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "file_size_blocks": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_locked_memory_bytes": {
+      "soft": 65536,
+      "hard": 65536
+    },
+    "max_memory_size_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "open_files": {
+      "soft": 524288,
+      "hard": 524288
+    },
+    "stack_size_bytes": {
+      "soft": 8388608,
+      "hard": "unlimited"
+    },
+    "cpu_time_seconds": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_user_processes": {
+      "soft": 62446,
+      "hard": 62446
+    },
+    "virtual_memory_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    }
+  },
+  "sharedObjects": [
+    "linux-vdso.so.1",
+    "/lib64/libdl.so.2",
+    "/lib64/librt.so.1",
+    "/lib64/libstdc++.so.6",
+    "/lib64/libm.so.6",
+    "/lib64/libgcc_s.so.1",
+    "/lib64/libpthread.so.0",
+    "/lib64/libc.so.6",
+    "/lib64/ld-linux-x86-64.so.2",
+    "/lib64/libnss_files.so.2",
+    "/lib64/libnss_mdns4_minimal.so.2",
+    "/lib64/libresolv.so.2",
+    "/lib64/libnss_dns.so.2"
+  ]
+}

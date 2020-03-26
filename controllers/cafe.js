@@ -9,10 +9,10 @@ const PDFDocument = require('pdfkit')
 const ITEMS_PER_PAGE = 2
 
 exports.getProducts = (req, res, next) => {
-  const page = req.query.page
+  const page = req.query.page || 1
   let totalProducts
   Product.find()
-    .count()
+    .countDocuments()
     .then((numProducts) => {
       totalProducts = numProducts
       return Product
@@ -22,17 +22,14 @@ exports.getProducts = (req, res, next) => {
 
     })
     .then(products => {
+      const totalPages = Math.ceil(totalProducts / ITEMS_PER_PAGE)
       res.render('cafe/product-list.pug',
         {
           products: products,
           path: '/',
           pageTitle: 'Cafe',
-          totalProducts: totalProducts,
-          hasNextPage: ITEMS_PER_PAGE * page < totalProducts,
-          hasPreviousPage: page > 1,
-          nextPage: page + 1,
-          previousPage: page - 1,
-          lastPage: Math.ceil(totalProducts / ITEMS_PER_PAGE)
+          currentPage: page,
+          pageNumbers: Array.from({ length: totalPages }, (v, k) => k + 1)
         })
     })
     .catch(err => {
