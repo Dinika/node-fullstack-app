@@ -14,8 +14,9 @@ block content
               input(type='hidden' name='_csrf' value=csrfToken)
               button.btn Delete
       hr    
-      form.centerEle(action="/checkout" method="POST")
-        input(type='hidden' name='_csrf' value=csrfToken)
-        button.btn Checkout
+      //- form.centerEle(action="/orders" method="POST")
+      //-   input(type='hidden' name='_csrf' value=csrfToken)
+      //-   button.btn Order
+      a(href="/checkout") Order Now
     else
       h1 The cart is empty

@@ -5,6 +5,8 @@ const fs = require('fs')
 const path = require('path')
 const rootDir = require('../utilities/rootDir')
 const PDFDocument = require('pdfkit')
+const stripeApiKey = require('../secrets').stripeApiKey
+const stripe = require('stripe')(stripeApiKey)
 
 const ITEMS_PER_PAGE = 2
 
@@ -80,6 +82,52 @@ exports.postCart = (req, res, next) => {
     })
 }
 
+exports.getCheckout = (req, res, next) => {
+  let productsInCart
+  let totalPrice = 0
+  if (!req.session.user) {
+    res.redirect('/')
+  } else {
+    req.user
+      .populate('cart.items.productId')
+      .execPopulate()
+      .then(user => {
+        productsInCart = user.cart.items
+        totalPrice = productsInCart.reduce((acc, p) => {
+          return acc + p.quantity * p.productId.price
+        }, 0)
+        return stripe.checkout.sessions.create({
+          payment_method_types: ['card'],
+          line_items: productsInCart.map(p => {
+            return {
+              name: p.productId.name,
+              description: p.productId.description,
+              amount: p.productId.price * 100,
+              currency: 'usd',
+              quantity: p.quantity
+            }
+          }),
+          success_url: req.protocol + '://' + req.get('host') + '/checkout/success',
+          cancel_url: req.protocol + '://' + req.get('host') + '/checkout/cancel'
+        })
+      })
+      .then((stripeSession) => {
+        res.render(
+          'cafe/checkout.pug',
+          {
+            path: '/checkout',
+            pageTitle: 'checkout',
+            productsInCart: productsInCart,
+            totalPrice: totalPrice,
+            sessionId: stripeSession.id
+          })
+      })
+      .catch(err => {
+        throwError(err, next)
+      })
+  }
+}
+
 exports.getOrders = (req, res, next) => {
   Order.find({ "user.userId": req.user._id })
     .then(orders => {
@@ -101,7 +149,7 @@ exports.deleteCartProduct = (req, res, next) => {
     })
 }
 
-exports.checkout = (req, res, next) => {
+exports.getCheckoutSuccess = (req, res, next) => {
   req.user
     .populate('cart.items.productId')
     .execPopulate()
@@ -122,7 +170,7 @@ exports.checkout = (req, res, next) => {
       return req.user.clearCart()
     })
     .then(result => {
-      res.redirect('./orders')
+      res.redirect('../orders')
     })
     .catch(err => {
       throwError(err, next)

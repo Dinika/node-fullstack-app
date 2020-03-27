@@ -1,0 +1,27 @@
+extends ../layouts/main-layout.pug
+
+block content
+  main
+    div Total price - #{totalPrice}
+    if productsInCart.length > 0
+      ul
+        each product in productsInCart
+          li 
+            p #{product.productId.name} - #{product.quantity}
+            form(action="/delete-cart-product" method="POST")
+              input(type="text" name="productId" value=(product._id) hidden)
+              input(type="number" hidden name="price" value=(product.price))
+              input(type='hidden' name='_csrf' value=csrfToken)
+            .center
+              button(id='order-btn' class='btn') Order
+              script(src="https://js.stripe.com/v3/")
+              script.
+                const stripe = Stripe('pk_test_A8wgnohxV8aR3XfLkz96TJoI00kfaXuhGi')
+                const sesId = "sessionId"
+                const orderBtn = document.getElementById('order-btn')
+                orderBtn.addEventListener('click', function() {
+                  stripe.redirectToCheckout({
+                    sessionId: "#{sessionId}"
+                  })
+                }) 
+
