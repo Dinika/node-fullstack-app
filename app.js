@@ -17,6 +17,8 @@ const flash = require('connect-flash')
 const multer = require('multer')
 const helmet = require('helmet')
 const compression = require('compression')
+const morgan = require('morgan')
+const fs = require('fs')
 
 const app = express()
 const store = new MongoDbStore({
@@ -46,9 +48,16 @@ const fileFilter = (req, file, cb) => {
 
 app.set('view engine', 'pug')
 app.set('views', 'views')
+const acceesLogStream = fs.createWriteStream(
+  path.join(__dirname, 'access.log'), {
+  flags: 'a'
+})
 
 app.use(helmet())
 app.use(compression())
+app.use(morgan('combined', {
+  stream: acceesLogStream
+}))
 
 app.use(express.static(path.join(rootDir, 'public')))
 app.use('/images', express.static(path.join(rootDir, 'images')))
