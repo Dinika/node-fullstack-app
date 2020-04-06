@@ -15,6 +15,7 @@ const MongoDbStore = require('connect-mongodb-session')(session)
 const csurf = require('csurf')
 const flash = require('connect-flash')
 const multer = require('multer')
+const helmet = require('helmet')
 
 const app = express()
 const store = new MongoDbStore({
@@ -32,6 +33,7 @@ const fileStorage = multer.diskStorage({
     cb(null, `${new Date().toISOString()}-${file.originalname}`)
   }
 })
+
 const fileFilter = (req, file, cb) => {
   const acceptedFormats = ['image/png', 'image/jpeg', 'image/jpg']
   if (acceptedFormats.includes(file.mimetype)) {
@@ -43,6 +45,8 @@ const fileFilter = (req, file, cb) => {
 
 app.set('view engine', 'pug')
 app.set('views', 'views')
+
+app.use(helmet())
 
 app.use(express.static(path.join(rootDir, 'public')))
 app.use('/images', express.static(path.join(rootDir, 'images')))
