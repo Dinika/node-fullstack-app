@@ -170,7 +170,7 @@ exports.getCheckoutSuccess = (req, res, next) => {
       return req.user.clearCart()
     })
     .then(result => {
-      res.redirect('../orders')
+      res.redirect('/orders')
     })
     .catch(err => {
       throwError(err, next)

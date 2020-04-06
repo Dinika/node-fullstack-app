@@ -12,13 +12,12 @@ router.get('/products', cafeController.getProducts)
 router.get('/cart', isAuthenticated, cafeController.getCart)
 router.post('/cart', isAuthenticated, cafeController.postCart)
 router.post('/delete-cart-product', isAuthenticated, cafeController.deleteCartProduct)
-router.get('/orders', isAuthenticated, cafeController.getOrders)
 router.get('/product/:productId', isAuthenticated, cafeController.getProduct)
 router.post('/orders', isAuthenticated, cafeController.getCheckoutSuccess)
 router.get('/invoice/:orderId', isAuthenticated, cafeController.getInvoice)
-router.get('/checkout/success', isAuthenticated, cafeController.getCheckoutSuccess)
-
 router.get('/checkout', isAuthenticated, cafeController.getCheckout)
+router.get('/checkout/success', isAuthenticated, cafeController.getCheckoutSuccess)
 router.get('/checkout/cancel', isAuthenticated, cafeController.getCheckout)
+router.get('/orders', isAuthenticated, cafeController.getOrders)
 
 module.exports = router

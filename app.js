@@ -89,7 +89,7 @@ app.use(errorController.get500)
 
 mongoose.connect(connectionUri)
   .then(() => {
-    app.listen(4000)
+    app.listen(process.env.PORT || 4000)
   })
   .catch(err => {
     console.log(err)
