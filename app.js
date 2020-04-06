@@ -16,6 +16,7 @@ const csurf = require('csurf')
 const flash = require('connect-flash')
 const multer = require('multer')
 const helmet = require('helmet')
+const compression = require('compression')
 
 const app = express()
 const store = new MongoDbStore({
@@ -47,6 +48,7 @@ app.set('view engine', 'pug')
 app.set('views', 'views')
 
 app.use(helmet())
+app.use(compression())
 
 app.use(express.static(path.join(rootDir, 'public')))
 app.use('/images', express.static(path.join(rootDir, 'images')))
