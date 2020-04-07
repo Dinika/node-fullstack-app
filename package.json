@@ -9,6 +9,9 @@
     "start-server": "node app.js",
     "start:dev": "NODE_ENV=dev nodemon app.js"
   },
+  "engines": {
+    "node": "11.15.0"
+  },
   "nodemonConfig": {
     "ignore": [
       "data"

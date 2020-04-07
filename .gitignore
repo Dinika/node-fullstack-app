@@ -4,3 +4,5 @@ package-lock.json
 secrets.js
 nodemon.json
 access.log
+server.cert
+server.key

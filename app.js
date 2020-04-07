@@ -68,6 +68,7 @@ app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
 app.use(
   session({ secret: sessionSecret, resave: false, saveUninitialized: false, store: store })
 )
+
 app.use(csrfProtection)
 app.use(flash())
 
